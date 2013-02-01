@@ -14,5 +14,8 @@ public class JSimForest_Project {
             System.out.println("Ce truc me fait vraiment chier !!!");
             System.out.println("Test de des branches");
         }
+        for (int i = 0; i < 10; i++) {
+            System.out.println("aze");
+        }
     }
 }
