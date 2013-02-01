@@ -16,15 +16,15 @@ public class DALObject {
     private PreparedStatement stmt;
     
     public DALObject() {
-        /*try {
+        try {
             this.login = "root";
             this.password = "";
             this.nameBDD = "";
             this.url = "jdbc:mysql://localhost:3306/"+this.nameBDD;
-            this.connection = DriverManager.getConnection(url,login,password);
+            this.connection = (Connection) DriverManager.getConnection(url,login,password);
             System.out.println("-- Connexion reussit --");
         } catch (SQLException e){
             System.out.println("-- Erreur de connexion --");
-        }*/
+        }
     }
 }
