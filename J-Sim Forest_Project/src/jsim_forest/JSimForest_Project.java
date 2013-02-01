@@ -1,5 +1,8 @@
 package jsim_forest;
 
+import gil.GILObject;
+
+
 public class JSimForest_Project {
 
     /**
@@ -7,5 +10,7 @@ public class JSimForest_Project {
      */
     public static void main(String[] args) {
         System.out.println("=== J-sim Forest ===");
+        
+        GILObject window = new GILObject();
     }
 }
