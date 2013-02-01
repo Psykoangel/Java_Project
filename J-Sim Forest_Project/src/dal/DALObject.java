@@ -16,7 +16,7 @@ public class DALObject {
     private PreparedStatement stmt;
     
     public DALObject() {
-        try {
+        /*try {
             this.login = "root";
             this.password = "";
             this.nameBDD = "";
@@ -25,6 +25,6 @@ public class DALObject {
             System.out.println("-- Connexion reussit --");
         } catch (SQLException e){
             System.out.println("-- Erreur de connexion --");
-        }
+        }*/
     }
 }
