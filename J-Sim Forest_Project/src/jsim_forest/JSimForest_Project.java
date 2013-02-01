@@ -8,6 +8,6 @@ public class JSimForest_Project {
     public static void main(String[] args) {
         System.out.println("=== J-sim Forest ===");
         System.out.println("Text test : this exists only to test the git commit function !");
-        System.out.println("Je suis la -- Alex");
+        System.out.println("Test branch master");
     }
 }
