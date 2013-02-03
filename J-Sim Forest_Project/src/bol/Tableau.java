@@ -33,9 +33,25 @@ public class Tableau {
         return tab;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     //Setter
     public void setTab(Case[][] tab) {
         this.tab = tab;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
     
     
