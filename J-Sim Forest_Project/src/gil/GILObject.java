@@ -54,8 +54,6 @@ public class GILObject extends JFrame {
         panText.setPreferredSize(new Dimension(400, 50));
         JLabel libText = new JLabel("Text");
         panText.add(libText);
-
-       
         
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panMenu, panPara);
         split.setDividerLocation(200);
@@ -66,7 +64,6 @@ public class GILObject extends JFrame {
         this.getContentPane().add(split, BorderLayout.EAST);
         this.getContentPane().add(panGraphic, BorderLayout.CENTER);
         this.getContentPane().add(split2, BorderLayout.SOUTH);
-        
         
         this.setVisible(true);
     }
