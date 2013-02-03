@@ -15,8 +15,9 @@ public class GILObject extends JFrame {
     private JPanel panPara;
     private JPanel panProgBar;
     private JPanel panText;
-    private JSplitPane split;
-    private JSplitPane split2;
+    private JSplitPane splitDroite;
+    private JSplitPane splitBas;
+    
     
     public GILObject() {
 
@@ -45,25 +46,25 @@ public class GILObject extends JFrame {
         
         panProgBar = new JPanel();
         panProgBar.setBackground(Color.green);
-        panProgBar.setPreferredSize(new Dimension(400, 50));
+        panProgBar.setPreferredSize(new Dimension(400, 40));
         JLabel libProgBar = new JLabel("ProgBar");
         panProgBar.add(libProgBar);
         
         panText = new JPanel();
         panText.setBackground(Color.black);
-        panText.setPreferredSize(new Dimension(400, 50));
+        panText.setPreferredSize(new Dimension(400, 40));
         JLabel libText = new JLabel("Text");
         panText.add(libText);
         
-        split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panMenu, panPara);
-        split.setDividerLocation(200);
+        splitDroite = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panMenu, panPara);
+        splitDroite.setDividerLocation(225);
 
-        split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panText, panProgBar);
-        split2.setDividerLocation(300);
+        splitBas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panText, panProgBar);
+        splitBas.setDividerLocation(300);
         
-        this.getContentPane().add(split, BorderLayout.EAST);
+        this.getContentPane().add(splitDroite, BorderLayout.EAST);
         this.getContentPane().add(panGraphic, BorderLayout.CENTER);
-        this.getContentPane().add(split2, BorderLayout.SOUTH);
+        this.getContentPane().add(splitBas, BorderLayout.SOUTH);
         
         this.setVisible(true);
     }
