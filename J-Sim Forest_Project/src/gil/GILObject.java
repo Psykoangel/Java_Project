@@ -4,10 +4,8 @@ package gil;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
+import java.awt.GridLayout;
+import javax.swing.*;
 
 public class GILObject extends JFrame {
     private JPanel panGraphic;
@@ -27,10 +25,10 @@ public class GILObject extends JFrame {
         this.setSize(800, 600);
 
         panGraphic = new JPanel();
-        panGraphic.setBackground(Color.blue);
+        panGraphic.setBackground(Color.black);
         panGraphic.setPreferredSize(new Dimension(600, 500));
-        JLabel libGraphic = new JLabel("Graphic");
-        panGraphic.add(libGraphic);
+//        JLabel libGraphic = new JLabel("Graphic");
+//        panGraphic.add(libGraphic);
 
         panMenu = new JPanel();
         panMenu.setBackground(Color.red);
@@ -65,7 +63,23 @@ public class GILObject extends JFrame {
         this.getContentPane().add(splitDroite, BorderLayout.EAST);
         this.getContentPane().add(panGraphic, BorderLayout.CENTER);
         this.getContentPane().add(splitBas, BorderLayout.SOUTH);
+
+        int width = 50; 
+        int length = 50;
         
+        JButton[][] grid; //nom de la grille de bouton
+        panGraphic.setLayout(new GridLayout(width,length)); //Layout
+        grid = new JButton[width][length]; //allocattion de la taille de la grille
+        for(int y=0; y<length; y++)
+        {
+            for(int x=0; x<width; x++)
+            {
+              //grid[x][y] = new JButton(x+","+y); //coordonnee - commenter la ligne suivante
+                grid[x][y] = new JButton(); //creation des bouttons
+                grid[x][y].setBackground(Color.white);
+                panGraphic.add(grid[x][y]); //ajout des boutons
+            }
+        }
         this.setVisible(true);
     }
 }
