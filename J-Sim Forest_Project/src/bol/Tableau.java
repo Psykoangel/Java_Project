@@ -10,8 +10,8 @@ public class Tableau {
         this.x = 100;
         this.y = 100;
         this.tab = new Case[x][y];
-        for (int width = 0; width < this.y -1; width++) {
-            for (int length = 0; length < this.x -1; length++) {
+        for (int width = 0; width < this.y; width++) {
+            for (int length = 0; length < this.x; length++) {
                 this.tab[length][width] = new Case(Etat.vide);
             }
         }
@@ -21,9 +21,9 @@ public class Tableau {
         this.x = x_default;
         this.y = y_default;
         this.tab = new Case[x][y];
-        for (int width = 0; width < this.y -1; width++) {
-            for (int length = 0; length < this.x -1; length++) {
-                this.tab[length][width] = new Case();
+        for (int width = 0; width < this.y; width++) {
+            for (int length = 0; length < this.x; length++) {
+                this.tab[length][width] = new Case(Etat.vide);
             }
         }
     }
