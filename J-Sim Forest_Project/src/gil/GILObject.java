@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class GILObject extends JFrame {
     private JPanel panGraphic;
@@ -15,6 +16,7 @@ public class GILObject extends JFrame {
     private JPanel panText;
     private JSplitPane splitDroite;
     private JSplitPane splitBas;
+    private JButton[][] grid; //nom de la grille de bouton
     
     
     public GILObject() {
@@ -25,7 +27,7 @@ public class GILObject extends JFrame {
         this.setSize(800, 600);
 
         panGraphic = new JPanel();
-        panGraphic.setBackground(Color.black);
+        panGraphic.setBackground(Color.white);
         panGraphic.setPreferredSize(new Dimension(600, 500));
 //        JLabel libGraphic = new JLabel("Graphic");
 //        panGraphic.add(libGraphic);
@@ -64,11 +66,13 @@ public class GILObject extends JFrame {
         this.getContentPane().add(panGraphic, BorderLayout.CENTER);
         this.getContentPane().add(splitBas, BorderLayout.SOUTH);
 
-        int width = 50; 
-        int length = 50;
         
-        JButton[][] grid; //nom de la grille de bouton
-        panGraphic.setLayout(new GridLayout(width,length)); //Layout
+        /*************************/
+        /**/ int width = 50;  /**/
+        /**/ int length = 50; /**/
+        /*************************/
+
+        panGraphic.setLayout(new GridLayout(width,length));
         grid = new JButton[width][length]; //allocattion de la taille de la grille
         for(int y=0; y<length; y++)
         {
@@ -76,7 +80,9 @@ public class GILObject extends JFrame {
             {
               //grid[x][y] = new JButton(x+","+y); //coordonnee - commenter la ligne suivante
                 grid[x][y] = new JButton(); //creation des bouttons
-                grid[x][y].setBackground(Color.white);
+                grid[x][y].setBackground(new Color(0,0,0));
+                grid[x][y].setBorderPainted(false);
+              /*  grid[x][y].setOpaque(false);*/
                 panGraphic.add(grid[x][y]); //ajout des boutons
             }
         }
