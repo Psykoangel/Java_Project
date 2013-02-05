@@ -3,13 +3,18 @@ package jsim_forest;
 import bol.BOLObject;
 import bol.Case;
 import bol.Etat;
+import dal.DALObject;
 import gil.GILObject;
+import java.sql.SQLException;
 
 
 public class JSimForest_Project {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         System.out.println("=== J-sim Forest ===");
+        
+        DALObject test = new DALObject();
+        test.select();
         
         GILObject window = new GILObject();
         BOLObject calculate = new BOLObject();
