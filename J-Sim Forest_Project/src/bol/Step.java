@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
+/**
+ * 
+ * @author Psyko
+ */
 public class Step implements ActionListener{
     
     int lastUpdate;
@@ -16,6 +20,9 @@ public class Step implements ActionListener{
     Timer timer;
 
     // Constructors
+    /**
+     * 
+     */
     public Step() {
         
         remainingTime = 100;
@@ -23,6 +30,11 @@ public class Step implements ActionListener{
         timer.setInitialDelay(0);
     }
     
+    /**
+     * 
+     * @param msTime
+     * @param calculate
+     */
     public Step(int msTime, BOLObject calculate) {
         
         remainingTime = 100;
@@ -33,33 +45,59 @@ public class Step implements ActionListener{
     }
 
     // Getter
+    /**
+     * 
+     * @return
+     */
     public int getActualStepNumber() {
         return actualStepNumber;
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getRemainingTime() {
         return remainingTime;
     }
 
     // Setter
+    /**
+     * 
+     * @param actualStepNumber
+     */
     public void setActualStepNumber(int actualStepNumber) {
         this.actualStepNumber = actualStepNumber;
     }
 
+    /**
+     * 
+     * @param remainingTime
+     */
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
     }
     
     
+    /**
+     * 
+     * @param BOLobj
+     */
     public void updateBOLObject(BOLObject BOLobj){
         this.BOLObj = BOLobj;
     }
     
     
+    /**
+     * 
+     */
     public void start(){
         resume();
     }
     
+    /**
+     * 
+     */
     public void stop(){
         pause();
     }

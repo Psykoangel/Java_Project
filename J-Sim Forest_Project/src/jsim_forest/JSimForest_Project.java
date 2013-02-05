@@ -23,7 +23,7 @@ public class JSimForest_Project {
         Step timeStep = new Step(TimeForOneStep, calculate);
         calculate.emptyTabGen(wantedXTab, wantedYTab);
         
-        Case[][] newTab = new Case[7][7];
+        Case[][] newTab = new Case[wantedXTab][wantedYTab];
         for (int i = 0; i < wantedYTab; i++) {
             for (int j = 0; j < wantedXTab; j++) {
                 newTab[j][i] = new Case(Etat.vide);

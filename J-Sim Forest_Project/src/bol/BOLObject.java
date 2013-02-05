@@ -7,9 +7,13 @@ import java.util.Iterator;
 
 public class BOLObject {
     
+    
+    //Attributes
     private Tableau tab;
     private Tableau updatedTab;
     
+    
+    // Constructors
     public BOLObject(){
         
     }
@@ -51,12 +55,7 @@ public class BOLObject {
         return tab;
     }
     
-    
-    
-    
-    
-    
-    
+    //Methods
     public void CheckTab(){
         
         updatedTab = new Tableau(this.tab.getX(), this.tab.getY());
@@ -64,51 +63,70 @@ public class BOLObject {
         for (int width = 0; width < tab.getY(); width++) {
             for (int length = 0; length < tab.getX() ; length++) {
                 
-                //System.out.println("DEBUG : " + length + " - " + width);
-                
-                ArrayList al = getVecinity(length, width, tab.getX(), tab.getY());
+                ArrayList al = getVecinity(Neighborhood.VonNeumann, length, width, tab.getX(), tab.getY());
                 
                 HashMap countList = VecinityStateCount(al);
                 
                 UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
+                
             }
         }
     }
     
-    private ArrayList getVecinity(int length, int width, int xTabSize, int yTabSize){
+    private ArrayList getVecinity(Neighborhood nh, int length, int width, int xTabSize, int yTabSize){
         
         ArrayList<Case> VecinityList = new ArrayList<>();
-        
-        if (length < xTabSize -1 && width > 0) {//   case droite haute
-            VecinityList.add(tab.getTab()[length + 1][width - 1]);
-        }
-        
-        if (length < xTabSize -1) {//   case droite
-            VecinityList.add(tab.getTab()[length + 1][width]);
-        }
+        if (nh == Neighborhood.Moore) {
+            
+            if (length < xTabSize -1) {//   case droite
+                VecinityList.add(tab.getTab()[length + 1][width]);
+            }
 
-        if (length < xTabSize -1 && width < yTabSize -1) {//   case droite basse
-            VecinityList.add(tab.getTab()[length + 1][width + 1]);
-        }
+            if (width < yTabSize -1) {//   case basse
+                VecinityList.add(tab.getTab()[length][width + 1]);
+            }
 
-        if (width < yTabSize -1) {//   case basse
-            VecinityList.add(tab.getTab()[length][width + 1]);
-        }
+            if (length > 0) {//   case gauche
+                VecinityList.add(tab.getTab()[length - 1][width]);
+            }
 
-        if (length > 0 && width < yTabSize -1) {//   case basse gauche
-            VecinityList.add(tab.getTab()[length - 1][width + 1]);
-        }
+            if (width > 0) {//   case haute
+                VecinityList.add(tab.getTab()[length][width - 1]);
+            }
+            
+        } else {
+            
+            if (length < xTabSize -1 && width > 0) {//   case droite haute
+                VecinityList.add(tab.getTab()[length + 1][width - 1]);
+            }
 
-        if (length > 0) {//   case gauche
-            VecinityList.add(tab.getTab()[length - 1][width]);
-        }
+            if (length < xTabSize -1) {//   case droite
+                VecinityList.add(tab.getTab()[length + 1][width]);
+            }
 
-        if (length > 0 && width > 0) {//   case gauche haute
-            VecinityList.add(tab.getTab()[length - 1][width - 1]);
-        }
+            if (length < xTabSize -1 && width < yTabSize -1) {//   case droite basse
+                VecinityList.add(tab.getTab()[length + 1][width + 1]);
+            }
 
-        if (width > 0) {//   case haute
-            VecinityList.add(tab.getTab()[length][width - 1]);
+            if (width < yTabSize -1) {//   case basse
+                VecinityList.add(tab.getTab()[length][width + 1]);
+            }
+
+            if (length > 0 && width < yTabSize -1) {//   case basse gauche
+                VecinityList.add(tab.getTab()[length - 1][width + 1]);
+            }
+
+            if (length > 0) {//   case gauche
+                VecinityList.add(tab.getTab()[length - 1][width]);
+            }
+
+            if (length > 0 && width > 0) {//   case gauche haute
+                VecinityList.add(tab.getTab()[length - 1][width - 1]);
+            }
+
+            if (width > 0) {//   case haute
+                VecinityList.add(tab.getTab()[length][width - 1]);
+            }
         }
         
         return VecinityList;// retourne les cases du voisinage de la case donne en parametre.
@@ -121,6 +139,9 @@ public class BOLObject {
         countList.put(Etat.jeunePousse, 0);
         countList.put(Etat.arbuste, 0);
         countList.put(Etat.arbre, 0);
+        countList.put(Etat.feu, 0);
+        countList.put(Etat.cendre, 0);
+        countList.put(Etat.infecte, 0);
         
         
         for (Iterator it = l.iterator(); it.hasNext();) {//   pr chaque case du voisinage, on cherche son etat
@@ -145,6 +166,21 @@ public class BOLObject {
                     temp = Integer.valueOf(countList.get(Etat.arbre).toString());
                     temp++;
                     countList.put(Etat.arbre, temp);
+                break;
+                case feu:
+                    temp = Integer.valueOf(countList.get(Etat.feu).toString());
+                    temp++;
+                    countList.put(Etat.feu, temp);
+                break;
+                case cendre:
+                    temp = Integer.valueOf(countList.get(Etat.cendre).toString());
+                    temp++;
+                    countList.put(Etat.cendre, temp);
+                break;
+                case infecte:
+                    temp = Integer.valueOf(countList.get(Etat.infecte).toString());
+                    temp++;
+                    countList.put(Etat.infecte, temp);
                 break;
             }
         }
@@ -174,7 +210,62 @@ public class BOLObject {
                     cc.setElapsedTime(c.getElapsedTime() + 1);
                 }
             break;
-                
+            case arbre:
+                if (Integer.valueOf(hm.get(Etat.feu).toString()) <= 1) {
+                    if (IgnitionOrInfected(Etat.arbre)) {
+                        cc.setEtat(Etat.feu);
+                    }
+                }
+            break;
+            case feu:
+                cc.setEtat(Etat.cendre);
+            break;
+            case cendre:
+                cc.setEtat(Etat.vide);
+            break;
+            case infecte:
+                cc.setEtat(Etat.vide);
+            break;
         }
+    }
+    
+    private int CreateRandomNumber(){
+        int lowerPct = 0, hightPct = 100;
+        int temp = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
+        int temp2 = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
+        int temp3 = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
+        return (int)((temp + temp2 + temp3)/3);
+    }
+    
+    private boolean IgnitionOrInfected (Etat etat){
+        int rdm = CreateRandomNumber();
+        
+        switch(etat){
+            case jeunePousse:
+                if (rdm > 0 && rdm < 25) {
+                    return true;
+                }
+                if (rdm > 24 && rdm < 100) {
+                    return false;
+                }
+            break;
+            case arbuste:
+                if (rdm > 0 && rdm < 50) {
+                    return true;
+                }
+                if (rdm > 49 && rdm < 100) {
+                    return false;
+                }
+            break;
+            case arbre:
+                if (rdm > 0 && rdm < 75) {
+                    return true;
+                }
+                if (rdm > 74 && rdm < 100) {
+                    return false;
+                }
+            break;
+        }
+        return false;
     }
 }
