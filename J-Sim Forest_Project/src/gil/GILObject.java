@@ -2,11 +2,9 @@
 package gil;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 public class GILObject extends JFrame {
     private JPanel panGraphic;
@@ -16,45 +14,18 @@ public class GILObject extends JFrame {
     private JPanel panText;
     private JSplitPane splitDroite;
     private JSplitPane splitBas;
-    private JButton[][] grid; //nom de la grille de bouton
-    
     
     public GILObject() {
-
         this.setLocationRelativeTo(null);
         this.setTitle("J-Sim Forest");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);
-
-        panGraphic = new JPanel();
-        panGraphic.setBackground(Color.white);
-        panGraphic.setPreferredSize(new Dimension(600, 500));
-//        JLabel libGraphic = new JLabel("Graphic");
-//        panGraphic.add(libGraphic);
-
-        panMenu = new JPanel();
-        panMenu.setBackground(Color.red);
-        panMenu.setPreferredSize(new Dimension(200, 200));
-        JLabel libMenu = new JLabel("Menu");
-        panMenu.add(libMenu);
         
-        panPara = new JPanel();
-        panPara.setBackground(Color.orange);
-        panPara.setPreferredSize(new Dimension(200, 200));
-        JLabel libPara = new JLabel("Para");
-        panPara.add(libPara);
-        
-        panProgBar = new JPanel();
-        panProgBar.setBackground(Color.green);
-        panProgBar.setPreferredSize(new Dimension(400, 40));
-        JLabel libProgBar = new JLabel("ProgBar");
-        panProgBar.add(libProgBar);
-        
-        panText = new JPanel();
-        panText.setBackground(Color.black);
-        panText.setPreferredSize(new Dimension(400, 40));
-        JLabel libText = new JLabel("Text");
-        panText.add(libText);
+        panGraphic = new PanGraphic(10, 10);
+        panMenu = new PanMenu();
+        panPara = new PanPara();
+        panProgBar = new PanProgBar();
+        panText = new PanText();
         
         splitDroite = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panMenu, panPara);
         splitDroite.setDividerLocation(225);
@@ -63,29 +34,8 @@ public class GILObject extends JFrame {
         splitBas.setDividerLocation(300);
         
         this.getContentPane().add(splitDroite, BorderLayout.EAST);
-        this.getContentPane().add(panGraphic, BorderLayout.CENTER);
         this.getContentPane().add(splitBas, BorderLayout.SOUTH);
-
-        
-        /*************************/
-        /**/ int width = 50;  /**/
-        /**/ int length = 50; /**/
-        /*************************/
-
-        panGraphic.setLayout(new GridLayout(width,length));
-        grid = new JButton[width][length]; //allocattion de la taille de la grille
-        for(int y=0; y<length; y++)
-        {
-            for(int x=0; x<width; x++)
-            {
-              //grid[x][y] = new JButton(x+","+y); //coordonnee - commenter la ligne suivante
-                grid[x][y] = new JButton(); //creation des bouttons
-                grid[x][y].setBackground(new Color(0,0,0));
-                grid[x][y].setBorderPainted(false);
-              /*  grid[x][y].setOpaque(false);*/
-                panGraphic.add(grid[x][y]); //ajout des boutons
-            }
-        }
+        this.getContentPane().add(panGraphic, BorderLayout.CENTER);
         this.setVisible(true);
     }
 }
