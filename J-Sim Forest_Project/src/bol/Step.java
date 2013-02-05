@@ -11,22 +11,24 @@ public class Step implements ActionListener{
     int remainingTime;
     int stepNumber;
     int actualStepNumber;
+    BOLObject calculate;
     
     Timer timer;
 
     // Constructors
-    public Step(int msTime) {
-        
-        remainingTime = 100;
-        this.actualStepNumber = 0;
-        timer = new Timer(msTime, this);
-        timer.setInitialDelay(0);
-    }
-    
     public Step() {
         
         remainingTime = 100;
         timer = new Timer(3000, this);
+        timer.setInitialDelay(0);
+    }
+    
+    public Step(int msTime, BOLObject calculate) {
+        
+        remainingTime = 100;
+        this.actualStepNumber = 0;
+        this.calculate = calculate;
+        timer = new Timer(msTime, this);
         timer.setInitialDelay(0);
     }
 
@@ -35,11 +37,23 @@ public class Step implements ActionListener{
         return actualStepNumber;
     }
 
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
     // Setter
     public void setActualStepNumber(int actualStepNumber) {
         this.actualStepNumber = actualStepNumber;
     }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
+    }
     
+    
+    public void updateBOLObject(BOLObject BOLobj){
+        this.calculate = BOLobj;
+    }
     
     
     public void start(){
@@ -62,7 +76,20 @@ public class Step implements ActionListener{
         
         if (remainingTime == 0) {
             timer.stop();
+            return;
         }
+        
+        for (int j = 0; j < calculate.getUpdatedTab().getY(); j++) {
+            for (int i = 0; i < calculate.getUpdatedTab().getX(); i++) {
+                System.out.print(calculate.getUpdatedTab().getTab()[i][j] + " ");
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n\n");
+
+        calculate.setTab(calculate.getUpdatedTab().getTab(), calculate.getUpdatedTab().getX(), calculate.getUpdatedTab().getY());
+        calculate.CheckTab();
+        this.updateBOLObject(calculate);
     }
     
     void resume(){

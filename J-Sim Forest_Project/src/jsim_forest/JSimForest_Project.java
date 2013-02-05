@@ -3,6 +3,7 @@ package jsim_forest;
 import bol.BOLObject;
 import bol.Case;
 import bol.Etat;
+import bol.Step;
 import gil.GILObject;
 
 
@@ -11,13 +12,20 @@ public class JSimForest_Project {
     public static void main(String[] args) {
         System.out.println("=== J-sim Forest ===");
         
+        
+        int stepNumber = 7;
+        int wantedXTab = 7;
+        int wantedYTab = 7;
+        int TimeForOneStep = 5000;
+        
         GILObject window = new GILObject();
         BOLObject calculate = new BOLObject();
-        calculate.emptyTabGen(7, 7);
+        Step timeStep = new Step(TimeForOneStep, calculate);
+        calculate.emptyTabGen(wantedXTab, wantedYTab);
         
         Case[][] newTab = new Case[7][7];
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
+        for (int i = 0; i < wantedYTab; i++) {
+            for (int j = 0; j < wantedXTab; j++) {
                 newTab[j][i] = new Case(Etat.vide);
             }
         }
@@ -31,20 +39,14 @@ public class JSimForest_Project {
         System.out.print("\n");
         System.out.print("\n");
         
-        calculate.setUpdatedTab(newTab, 7, 7);
+        calculate.setUpdatedTab(newTab, wantedXTab, wantedYTab);
         
-        for (int pas = 0; pas < 7; pas++) {
-            for (int j = 0; j < calculate.getUpdatedTab().getY(); j++) {
-                for (int i = 0; i < calculate.getUpdatedTab().getX(); i++) {
-                    System.out.print(calculate.getUpdatedTab().getTab()[i][j] + " ");
-                }
-                System.out.print("\n");
-            }
-            System.out.print("\n\n");
-            
-            calculate.setTab(calculate.getUpdatedTab().getTab(), calculate.getUpdatedTab().getX(), calculate.getUpdatedTab().getY());
-            calculate.CheckTab();
-        }
+        timeStep.updateBOLObject(calculate);
+        
+        timeStep.setRemainingTime(stepNumber);
+        timeStep.start();
+        
+
         
         
     }

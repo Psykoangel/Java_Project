@@ -59,7 +59,7 @@ public class BOLObject {
     
     public void CheckTab(){
         
-        updatedTab = this.tab;
+        updatedTab = new Tableau(this.tab.getX(), this.tab.getY());
         
         for (int width = 0; width < tab.getY(); width++) {
             for (int length = 0; length < tab.getX() ; length++) {
@@ -152,7 +152,7 @@ public class BOLObject {
     }
     
     private void UpdateCheckedCell(Case c, Case cc, HashMap hm){
-        
+        cc.setEtat(c.getEtat());
         switch(c.getEtat()){
             case vide:
                 if (Integer.valueOf(hm.get(Etat.arbre).toString()) >= 2
@@ -162,14 +162,13 @@ public class BOLObject {
                 }
             break;
             case jeunePousse:
-                if (Integer.valueOf(hm.get(Etat.arbre).toString()) <= 3 || Integer.valueOf(hm.get(Etat.arbuste).toString()) <= 3) {
+                if (Integer.valueOf(hm.get(Etat.arbre).toString()) + Integer.valueOf(hm.get(Etat.arbuste).toString()) <= 3) {
                     cc.setEtat(Etat.arbuste);
                 }
             break;
-            case arbuste:
+            default:
             break;
-            case arbre:
-            break;
+                
         }
     }
 }
