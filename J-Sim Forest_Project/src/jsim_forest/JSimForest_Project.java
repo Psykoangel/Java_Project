@@ -13,10 +13,10 @@ public class JSimForest_Project {
         System.out.println("=== J-sim Forest ===");
         
         
-        int stepNumber = 7;
+        int stepNumber = 8;
         int wantedXTab = 7;
         int wantedYTab = 7;
-        int TimeForOneStep = 5000;
+        int TimeForOneStep = 1000;
         
         GILObject window = new GILObject();
         BOLObject calculate = new BOLObject();

@@ -11,7 +11,7 @@ public class Step implements ActionListener{
     int remainingTime;
     int stepNumber;
     int actualStepNumber;
-    BOLObject calculate;
+    BOLObject BOLObj;
     
     Timer timer;
 
@@ -27,7 +27,7 @@ public class Step implements ActionListener{
         
         remainingTime = 100;
         this.actualStepNumber = 0;
-        this.calculate = calculate;
+        this.BOLObj = calculate;
         timer = new Timer(msTime, this);
         timer.setInitialDelay(0);
     }
@@ -52,7 +52,7 @@ public class Step implements ActionListener{
     
     
     public void updateBOLObject(BOLObject BOLobj){
-        this.calculate = BOLobj;
+        this.BOLObj = BOLobj;
     }
     
     
@@ -79,17 +79,21 @@ public class Step implements ActionListener{
             return;
         }
         
-        for (int j = 0; j < calculate.getUpdatedTab().getY(); j++) {
-            for (int i = 0; i < calculate.getUpdatedTab().getX(); i++) {
-                System.out.print(calculate.getUpdatedTab().getTab()[i][j] + " ");
+        //======================DEBUG=======================================================================
+        
+        for (int j = 0; j < BOLObj.getUpdatedTab().getY(); j++) {
+            for (int i = 0; i < BOLObj.getUpdatedTab().getX(); i++) {
+                System.out.print(BOLObj.getUpdatedTab().getTab()[i][j] + " ");
             }
             System.out.print("\n");
         }
         System.out.print("\n\n");
 
-        calculate.setTab(calculate.getUpdatedTab().getTab(), calculate.getUpdatedTab().getX(), calculate.getUpdatedTab().getY());
-        calculate.CheckTab();
-        this.updateBOLObject(calculate);
+        //===================================================================================================
+        
+        BOLObj.setTab(BOLObj.getUpdatedTab().getTab(), BOLObj.getUpdatedTab().getX(), BOLObj.getUpdatedTab().getY());
+        BOLObj.CheckTab();
+        this.updateBOLObject(BOLObj);
     }
     
     void resume(){

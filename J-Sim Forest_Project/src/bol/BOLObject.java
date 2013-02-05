@@ -166,7 +166,13 @@ public class BOLObject {
                     cc.setEtat(Etat.arbuste);
                 }
             break;
-            default:
+            case arbuste :
+                if (c.getElapsedTime() == 1) {
+                    cc.setEtat(Etat.arbre);
+                    cc.setElapsedTime(0);
+                } else{
+                    cc.setElapsedTime(c.getElapsedTime() + 1);
+                }
             break;
                 
         }
