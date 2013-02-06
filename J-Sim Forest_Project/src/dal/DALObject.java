@@ -111,43 +111,42 @@ public class DALObject {
     
     //Update pour modifier ou écraser les données en BDD
     //BOL -> DAL
-    /*public void updateSave() throws SQLException {
+    public void updateSave(String pName, int pTx, int pTy, int pStt, int pSn, String pGrid, int pId) throws SQLException {
         String req = ("UPDATE save SET NAME = ?, TX = ?, TY = ?, STT = ?, SN = ?, GRID = ? WHERE ID = ?;");
         PreparedStatement preStmt = cnx.prepareStatement(req);
-        preStmt.setString(1, VARIABLE_RECUP_ID);
-        preStmt.setString(2, VARIABLE_RECUP_ID);
-        preStmt.setString(3, VARIABLE_RECUP_ID);
-        preStmt.setString(4, VARIABLE_RECUP_ID);
-        preStmt.setString(5, VARIABLE_RECUP_ID);
-        preStmt.setString(6, VARIABLE_RECUP_ID);
-        preStmt.setString(7, VARIABLE_RECUP_ID);
+        preStmt.setString(1, pName);
+        preStmt.setInt(2, pTx);
+        preStmt.setInt(3, pTy);
+        preStmt.setInt(4, pStt);
+        preStmt.setInt(5, pSn);
+        preStmt.setString(6, pGrid);
+        preStmt.setInt(7, pId);
         preStmt.execute();
         preStmt.close();
     }
     
     //Suppresion d'une sauvegarde
     //BOL -> DAL
-    public void deleteSave() throws SQLException {
+    public void deleteSave(int pId) throws SQLException {
         String req = ("DELETE FROM save WHERE ID = ?;");
         PreparedStatement preStmt = cnx.prepareStatement(req);
-        preStmt.setString(1, VARIABLE_RECUP_ID);
+        preStmt.setInt(1, pId);
         preStmt.execute();
         preStmt.close();
     }
     
     //Ajout d'une sauvegarde dans la BDD
     // BOL -> DAL
-    public void insertSave() throws SQLException {
-        String query = ("INSERT INTO employes (NAME, TX, TY, STT, SN, GRID) VALUES (?,?,?,?,?,?,?);");
-        preStmt.setString(1, VARIABLE_RECUP_ID);
-        preStmt.setString(2, VARIABLE_RECUP_ID);
-        preStmt.setString(3, VARIABLE_RECUP_ID);
-        preStmt.setString(4, VARIABLE_RECUP_ID);
-        preStmt.setString(5, VARIABLE_RECUP_ID);
-        preStmt.setString(6, VARIABLE_RECUP_ID);
-        preStmt.setString(7, VARIABLE_RECUP_ID);
+    public void insertSave(String pName, int pTx, int pTy, int pStt, int pSn, String pGrid) throws SQLException {
+        String query = ("INSERT INTO save (NAME, TX, TY, STT, SN, GRID) VALUES (?, ?, ?, ?, ?, ?);");
+        preStmt.setString(1, pName);
+        preStmt.setInt(2, pTx);
+        preStmt.setInt(3, pTy);
+        preStmt.setInt(4, pStt);
+        preStmt.setInt(5, pSn);
+        preStmt.setString(6, pGrid);
         preStmt = cnx.prepareStatement(query);
         preStmt.execute();
         preStmt.close();
-    }*/
+    }
 }
