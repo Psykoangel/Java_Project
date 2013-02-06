@@ -7,11 +7,18 @@ import java.util.Iterator;
 
 public class BOLObject {
     
+    
+    //Attributes
     private Tableau tab;
     private Tableau updatedTab;
-    
-    public BOLObject(){
+    private boolean fireMode;
+    private boolean invasionMode;
         
+    
+    // Constructors
+    public BOLObject(){
+        fireMode = false;
+        invasionMode = false;
     }
     
     
@@ -20,12 +27,24 @@ public class BOLObject {
         this.tab.setTab(tab);
         this.tab.setX(l);
         this.tab.setY(w);
+        //System.out.println("Tab updated !");
     }
 
     public void setUpdatedTab(Case[][] tab, int l, int w) {
         this.updatedTab.setTab(tab);
         this.updatedTab.setX(l);
         this.updatedTab.setY(w);
+        //System.out.println("UpdatedTab updated !");
+    }
+
+    public void setFireMode(boolean fireMode) {
+        this.fireMode = fireMode;
+        //System.out.println("fireMode activated !");
+    }
+
+    public void setInvasionMode(boolean invasionMode) {
+        this.invasionMode = invasionMode;
+        //System.out.println("invasionMode updated !");
     }
     
     
@@ -36,6 +55,14 @@ public class BOLObject {
 
     public Tableau getUpdatedTab() {
         return updatedTab;
+    }
+
+    public boolean isFireMode() {
+        return fireMode;
+    }
+
+    public boolean isInvasionMode() {
+        return invasionMode;
     }
     
         
@@ -48,69 +75,109 @@ public class BOLObject {
     public Tableau emptyTabGen(int x, int y){
         this.tab = new Tableau(x, y);
         this.updatedTab = new Tableau(x, y);
+        //System.out.println("Empty Tables created !");
         return tab;
     }
     
-    
-    
-    
-    
-    
-    
+    //Methods
     public void CheckTab(){
         
-        updatedTab = this.tab;
+        updatedTab = new Tableau(this.tab.getX(), this.tab.getY());
+        
+        ArrayList al = new ArrayList();
+        HashMap countList = new HashMap();
         
         for (int width = 0; width < tab.getY(); width++) {
             for (int length = 0; length < tab.getX() ; length++) {
                 
-                //System.out.println("DEBUG : " + length + " - " + width);
-                
-                ArrayList al = getVecinity(length, width, tab.getX(), tab.getY());
-                
-                HashMap countList = VecinityStateCount(al);
+                    al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
+                    countList = VecinityStateCount(al);
+                    
+                if (fireMode || invasionMode) {
+                    if (invasionMode) {
+                        al = getVecinity(Neighborhood.VonNeumann, length, width, tab.getX(), tab.getY());
+                        countList = VecinityStateCount(al);
+                        
+                        if (fireMode && Integer.valueOf(countList.get(Etat.infecte).toString()) >= 1) {
+                            ArrayList alTemp = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
+                            HashMap countListTemp = VecinityStateCount(al);
+                            
+                            if (Integer.valueOf(countList.get(Etat.feu).toString()) >= 1) {
+                                al = alTemp;
+                                countList = countListTemp;
+                            }
+                        }
+                    } else {
+                        al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
+                        countList = VecinityStateCount(al);
+                    }
+                }
                 
                 UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
+                
             }
         }
     }
     
-    private ArrayList getVecinity(int length, int width, int xTabSize, int yTabSize){
+    private ArrayList getVecinity(Neighborhood nh, int length, int width, int xTabSize, int yTabSize){
         
         ArrayList<Case> VecinityList = new ArrayList<>();
+        if (nh == Neighborhood.VonNeumann) {
+            //System.out.println("Voisinage de Von Neumann demande !");
+            
+            if (length < xTabSize -1) {//   case droite
+                VecinityList.add(tab.getTab()[length + 1][width]);
+            }
+
+            if (width < yTabSize -1) {//   case basse
+                VecinityList.add(tab.getTab()[length][width + 1]);
+            }
+
+            if (length > 0) {//   case gauche
+                VecinityList.add(tab.getTab()[length - 1][width]);
+            }
+
+            if (width > 0) {//   case haute
+                VecinityList.add(tab.getTab()[length][width - 1]);
+            }
+            
+        } else {
+            //System.out.println("Voisinage de Moore demande !");
+            
+            if (length < xTabSize -1 && width > 0) {//   case droite haute
+                VecinityList.add(tab.getTab()[length + 1][width - 1]);
+            }
+
+            if (length < xTabSize -1) {//   case droite
+                VecinityList.add(tab.getTab()[length + 1][width]);
+            }
+
+            if (length < xTabSize -1 && width < yTabSize -1) {//   case droite basse
+                VecinityList.add(tab.getTab()[length + 1][width + 1]);
+            }
+
+            if (width < yTabSize -1) {//   case basse
+                VecinityList.add(tab.getTab()[length][width + 1]);
+            }
+
+            if (length > 0 && width < yTabSize -1) {//   case basse gauche
+                VecinityList.add(tab.getTab()[length - 1][width + 1]);
+            }
+
+            if (length > 0) {//   case gauche
+                VecinityList.add(tab.getTab()[length - 1][width]);
+            }
+
+            if (length > 0 && width > 0) {//   case gauche haute
+                VecinityList.add(tab.getTab()[length - 1][width - 1]);
+            }
+
+            if (width > 0) {//   case haute
+                VecinityList.add(tab.getTab()[length][width - 1]);
+            }
+        }
         
-        if (length < xTabSize -1 && width > 0) {//   case droite haute
-            VecinityList.add(tab.getTab()[length + 1][width - 1]);
-        }
-        
-        if (length < xTabSize -1) {//   case droite
-            VecinityList.add(tab.getTab()[length + 1][width]);
-        }
-
-        if (length < xTabSize -1 && width < yTabSize -1) {//   case droite basse
-            VecinityList.add(tab.getTab()[length + 1][width + 1]);
-        }
-
-        if (width < yTabSize -1) {//   case basse
-            VecinityList.add(tab.getTab()[length][width + 1]);
-        }
-
-        if (length > 0 && width < yTabSize -1) {//   case basse gauche
-            VecinityList.add(tab.getTab()[length - 1][width + 1]);
-        }
-
-        if (length > 0) {//   case gauche
-            VecinityList.add(tab.getTab()[length - 1][width]);
-        }
-
-        if (length > 0 && width > 0) {//   case gauche haute
-            VecinityList.add(tab.getTab()[length - 1][width - 1]);
-        }
-
-        if (width > 0) {//   case haute
-            VecinityList.add(tab.getTab()[length][width - 1]);
-        }
-        
+        //System.out.println("Recuperation du voisinage !");
         return VecinityList;// retourne les cases du voisinage de la case donne en parametre.
     }
     
@@ -121,8 +188,12 @@ public class BOLObject {
         countList.put(Etat.jeunePousse, 0);
         countList.put(Etat.arbuste, 0);
         countList.put(Etat.arbre, 0);
+        countList.put(Etat.feu, 0);
+        countList.put(Etat.cendre, 0);
+        countList.put(Etat.infecte, 0);
         
         
+        //System.out.println("Debut du comptage d etat dans le voisinage !");
         for (Iterator it = l.iterator(); it.hasNext();) {//   pr chaque case du voisinage, on cherche son etat
             Case c = (Case) it.next();
             switch(c.getEtat()){
@@ -146,30 +217,178 @@ public class BOLObject {
                     temp++;
                     countList.put(Etat.arbre, temp);
                 break;
+                case feu:
+                    temp = Integer.valueOf(countList.get(Etat.feu).toString());
+                    temp++;
+                    countList.put(Etat.feu, temp);
+                break;
+                case cendre:
+                    temp = Integer.valueOf(countList.get(Etat.cendre).toString());
+                    temp++;
+                    countList.put(Etat.cendre, temp);
+                break;
+                case infecte:
+                    temp = Integer.valueOf(countList.get(Etat.infecte).toString());
+                    temp++;
+                    countList.put(Etat.infecte, temp);
+                break;
             }
         }
+        //System.out.println("Fin du comptage d etat du voisinage !");
         return countList;
     }
     
     private void UpdateCheckedCell(Case c, Case cc, HashMap hm){
+        //System.out.println("Debut de modification d une cellule dans updatedTab !");
+        cc.setEtat(c.getEtat());
+        if (fireMode || invasionMode) {
+        //System.out.println("modification en fireMode/InvasionMode !");
+            switch(c.getEtat()){
+                case jeunePousse:
+                    if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
+                        if (Ignition(c.getEtat())) {
+                            cc.setEtat(Etat.feu);
+                        }
+                    } else {
+                        if (Infected(c.getEtat())) {
+                            cc.setEtat(Etat.infecte);
+                        }
+                    }
+                break;
+                case arbuste :
+                    if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
+                        if (Ignition(c.getEtat())) {
+                            cc.setEtat(Etat.feu);
+                        }
+                    } else {
+                        if (Infected(c.getEtat())) {
+                            cc.setEtat(Etat.infecte);
+                        }
+                    }
+                break;
+                case arbre:
+                    if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
+                        if (Ignition(c.getEtat())) {
+                            cc.setEtat(Etat.feu);
+                        }
+                    } else {
+                        if (Infected(c.getEtat())) {
+                            cc.setEtat(Etat.infecte);
+                        }
+                    }
+                break;
+                case feu:
+                    cc.setEtat(Etat.cendre);
+                break;
+                case cendre:
+                    cc.setEtat(Etat.vide);
+                break;
+                case infecte:
+                    cc.setEtat(Etat.vide);
+                break;
+            }
+            
+        } else {
+        //System.out.println("Modification d une cellule en normal !");
+            switch(c.getEtat()){
+                case vide:
+                    if (Integer.valueOf(hm.get(Etat.arbre).toString()) >= 2
+                        || Integer.valueOf(hm.get(Etat.arbuste).toString()) >= 3
+                        || (Integer.valueOf(hm.get(Etat.arbre).toString()) == 1 && Integer.valueOf(hm.get(Etat.arbuste).toString()) == 2)) {
+                        cc.setEtat(Etat.jeunePousse);
+                    }
+                break;
+                case jeunePousse:
+                    if (Integer.valueOf(hm.get(Etat.arbre).toString()) + Integer.valueOf(hm.get(Etat.arbuste).toString()) <= 3) {
+                        cc.setEtat(Etat.arbuste);
+                    }
+                break;
+                case arbuste :
+                    if (c.getElapsedTime() == 1) {
+                        cc.setEtat(Etat.arbre);
+                        cc.setElapsedTime(0);
+                    } else{
+                        cc.setElapsedTime(c.getElapsedTime() + 1);
+                    }
+                break;
+            }
+        }
         
-        switch(c.getEtat()){
-            case vide:
-                if (Integer.valueOf(hm.get(Etat.arbre).toString()) >= 2
-                    || Integer.valueOf(hm.get(Etat.arbuste).toString()) >= 3
-                    || (Integer.valueOf(hm.get(Etat.arbre).toString()) == 1 && Integer.valueOf(hm.get(Etat.arbuste).toString()) == 2)) {
-                    cc.setEtat(Etat.jeunePousse);
-                }
-            break;
+        //System.out.println("Fin de Modification de la cellule !");
+    }
+    
+    private int CreateRandomNumber(){
+        int lowerPct = 0, hightPct = 100;
+        int temp = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
+        int temp2 = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
+        int temp3 = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
+        //System.out.println("Creation un nombre aléatoire termine !");
+        return (int)((temp + temp2 + temp3)/3);
+    }
+    
+    private boolean Ignition (Etat etat){
+        int rdm = CreateRandomNumber();
+        
+        //System.out.println("Retour d un bouleen en fonction du pourcentage pour FireMode!");
+        switch(etat){
             case jeunePousse:
-                if (Integer.valueOf(hm.get(Etat.arbre).toString()) <= 3 || Integer.valueOf(hm.get(Etat.arbuste).toString()) <= 3) {
-                    cc.setEtat(Etat.arbuste);
+                if (rdm > 0 && rdm < 25) {
+                    return true;
+                }
+                if (rdm > 24 && rdm < 100) {
+                    return false;
                 }
             break;
             case arbuste:
+                if (rdm > 0 && rdm < 50) {
+                    return true;
+                }
+                if (rdm > 49 && rdm < 100) {
+                    return false;
+                }
             break;
             case arbre:
+                if (rdm > 0 && rdm < 75) {
+                    return true;
+                }
+                if (rdm > 74 && rdm < 100) {
+                    return false;
+                }
             break;
         }
+        return false;
+    }
+    
+    private boolean Infected (Etat etat){
+        int rdm = CreateRandomNumber();
+        
+        //System.out.println("Retour d un bouleen en fonction du pourcentage pour InvasionMode!");
+        switch(etat){
+            case jeunePousse:
+                if (rdm > 0 && rdm < 75) {
+                    return true;
+                }
+                if (rdm > 74 && rdm < 100) {
+                    return false;
+                }
+            break;
+            case arbuste:
+                if (rdm > 0 && rdm < 50) {
+                    return true;
+                }
+                if (rdm > 49 && rdm < 100) {
+                    return false;
+                }
+            break;
+            case arbre:
+                if (rdm > 0 && rdm < 25) {
+                    return true;
+                }
+                if (rdm > 24 && rdm < 100) {
+                    return false;
+                }
+            break;
+        }
+        return false;
     }
 }
