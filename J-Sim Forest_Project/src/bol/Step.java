@@ -38,11 +38,12 @@ public class Step implements ActionListener{
      * @param msTime
      * @param calculate
      */
-    public Step(int msTime, BOLObject calculate) {
+    public Step(int msTime, BOLObject calculate, GILObject window) {
         
         remainingTime = 100;
         this.actualStepNumber = 0;
         this.BOLObj = calculate;
+        this.GILObj = window;
         timer = new Timer(msTime, this);
         timer.setInitialDelay(0);
     }
@@ -119,7 +120,7 @@ public class Step implements ActionListener{
             timer.stop();
             return;
         }
-        
+/*        
 //======================DEBUG=======================================================================
         
         for (int j = 0; j < BOLObj.getUpdatedTab().getY(); j++) {
@@ -133,8 +134,12 @@ public class Step implements ActionListener{
         System.out.print("\n\n");
 
 //===================================================================================================
-        
-        BOLObj.setTab(BOLObj.getUpdatedTab().getTab(), BOLObj.getUpdatedTab().getX(), BOLObj.getUpdatedTab().getY());
+*/
+        this.GILObj.setGridLength(this.BOLObj.getUpdatedTab().getX());
+        this.GILObj.setGridWidth(this.BOLObj.getUpdatedTab().getY());
+        this.GILObj.setTabToShow(this.BOLObj.getUpdatedTab().getTab());
+        BOLObj.setTab(GILObj.getTabToShow(), GILObj.getGridWidth(), GILObj.getGridLength());
+        System.out.println(GILObj.getGridWidth()+"|"+GILObj.getGridLength());
         BOLObj.CheckTab();
         this.updateBOLObject(BOLObj);
     }

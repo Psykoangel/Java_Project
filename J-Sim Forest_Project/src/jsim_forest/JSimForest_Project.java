@@ -22,6 +22,7 @@ public class JSimForest_Project {
         GILObject window = new GILObject();
         
         BOLObject calculate = new BOLObject();
+        calculate.emptyTabGen(7, 7);
         
         Step timeStep = new Step(TimeForOneStep, calculate, window);
         

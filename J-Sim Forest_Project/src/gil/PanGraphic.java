@@ -5,36 +5,37 @@ import bol.Etat;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class PanGraphic extends JPanel{
-    private JButton[][] grid;
+    private JPanel[][] grid;
     private Case[][] tabToShow;
     private int gridWidth;
     private int gridLength;
+    private Border blackline;
 
     public PanGraphic(){
         this.setPreferredSize(new Dimension(600, 500));
-        this.gridLength = 0;
-        this.gridWidth = 0;
-        this.CreateGrid(5, 5);
+        this.blackline = BorderFactory.createLineBorder(Color.black);
+        //this.CreateGrid();
     }
     
-    private void CreateGrid(int gridWidth, int gridLength) {
-        this.gridWidth = gridWidth;
-        this.gridLength = gridLength;
-        this.grid = new JButton[this.gridWidth][this.gridLength];
+    private void CreateGrid() {
+        this.grid = new JPanel[this.gridWidth][this.gridLength];
         this.setLayout(new GridLayout(this.gridWidth, this.gridLength));
     }
     
-    private void updateGrid(Case[][] tabToShow) {
+    private void updateGrid() {
+        this.CreateGrid();
         for(int y=0; y<this.gridLength; y++)
         {
             for(int x=0; x<this.gridWidth; x++)
             {
+                this.grid[x][y] = new JPanel();
+                this.grid[x][y].setBorder(blackline);
                 this.ConvertCellGrid(x, y);
-                this.add(this.grid[x][y]);
                 this.ConvertGridCell(x, y);
             }
         }
@@ -45,14 +46,7 @@ public class PanGraphic extends JPanel{
         switch (this.tabToShow[x][y].getEtat()) 
         {
             case vide:        //vide -- blanc -- 255,255,255 -- 0
-                for(int p=0; p<7; p++)
-                {
-                    for(int o=0; o<7; o++)
-                    {
-                        System.out.println(this.tabToShow[o][p].getEtat());
-                    }
-                }
-                this.grid[x][y].setBackground(new Color(255, 255, 255));
+                this.grid[x][y].setBackground(new Color(255,255,255));
                 break;
             case jeunePousse:  //jeune pousse -- vert clair -- 147,208,81 -- 1
                 this.grid[x][y].setBackground(new Color(147,208,81));
@@ -76,6 +70,7 @@ public class PanGraphic extends JPanel{
                 this.grid[x][y].setBackground(new Color(255, 255, 255));
                 break;
         }
+        this.add(this.grid[x][y]);
     }
     private void ConvertGridCell(int x, int y) 
     {
@@ -113,6 +108,23 @@ public class PanGraphic extends JPanel{
 
     public void setTabToShow(Case[][] tabToShow) {
         this.tabToShow = tabToShow;
-        this.updateGrid(this.tabToShow);
+        this.updateGrid();
     }
+
+    public int getGridLength() {
+        return gridLength;
+    }
+
+    public void setGridLength(int gridLength) {
+        this.gridLength = gridLength;
+    }
+
+    public int getGridWidth() {
+        return gridWidth;
+    }
+
+    public void setGridWidth(int gridWidth) {
+        this.gridWidth = gridWidth;
+    }
+    
 }

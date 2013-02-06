@@ -5,6 +5,8 @@ import bol.Case;
 public class GILObject {
     private MainFrame mainFrame;
     private Case[][] tabToShow;
+    private int gridWidth;
+    private int gridLength;
     
     public GILObject () {
         this.mainFrame = new MainFrame();
@@ -24,4 +26,25 @@ public class GILObject {
         this.tabToShow = tabToShow;
         this.mainFrame.setTabToShow(this.tabToShow);
     }
+
+    public int getGridLength() {
+        this.gridLength = this.mainFrame.getGridLength();
+        return gridLength;
+    }
+
+    public void setGridLength(int gridLength) {
+        this.gridLength = gridLength;
+        this.mainFrame.setGridLength(this.gridLength);
+    }
+
+    public int getGridWidth() {
+        this.gridWidth = this.mainFrame.getGridWidth();
+        return gridWidth;
+    }
+
+    public void setGridWidth(int gridWidth) {
+        this.gridWidth = gridWidth;
+        this.mainFrame.setGridWidth(this.gridWidth);
+    }
+    
 }
