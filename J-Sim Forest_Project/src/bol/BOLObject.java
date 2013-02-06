@@ -11,7 +11,9 @@ public class BOLObject {
     //Attributes
     private Tableau tab;
     private Tableau updatedTab;
-    
+    private boolean fireMode;
+    private boolean invasionMode;
+        
     
     // Constructors
     public BOLObject(){
@@ -31,6 +33,14 @@ public class BOLObject {
         this.updatedTab.setX(l);
         this.updatedTab.setY(w);
     }
+
+    public void setFireMode(boolean fireMode) {
+        this.fireMode = fireMode;
+    }
+
+    public void setInvasionMode(boolean invasionMode) {
+        this.invasionMode = invasionMode;
+    }
     
     
     //Getter
@@ -40,6 +50,14 @@ public class BOLObject {
 
     public Tableau getUpdatedTab() {
         return updatedTab;
+    }
+
+    public boolean isFireMode() {
+        return fireMode;
+    }
+
+    public boolean isInvasionMode() {
+        return invasionMode;
     }
     
         
@@ -60,12 +78,34 @@ public class BOLObject {
         
         updatedTab = new Tableau(this.tab.getX(), this.tab.getY());
         
+        ArrayList al = new ArrayList();
+        HashMap countList = new HashMap();
+        
         for (int width = 0; width < tab.getY(); width++) {
             for (int length = 0; length < tab.getX() ; length++) {
                 
-                ArrayList al = getVecinity(Neighborhood.VonNeumann, length, width, tab.getX(), tab.getY());
-                
-                HashMap countList = VecinityStateCount(al);
+                    al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
+                    countList = VecinityStateCount(al);
+                    
+                if (fireMode || invasionMode) {
+                    if (invasionMode) {
+                        al = getVecinity(Neighborhood.VonNeumann, length, width, tab.getX(), tab.getY());
+                        countList = VecinityStateCount(al);
+                        
+                        if (fireMode && Integer.valueOf(countList.get(Etat.infecte).toString()) >= 1) {
+                            ArrayList alTemp = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
+                            HashMap countListTemp = VecinityStateCount(al);
+                            
+                            if (Integer.valueOf(countList.get(Etat.feu).toString()) >= 1) {
+                                al = alTemp;
+                                countList = countListTemp;
+                            }
+                        }
+                    } else {
+                        al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
+                        countList = VecinityStateCount(al);
+                    }
+                }
                 
                 UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
                 
@@ -189,43 +229,75 @@ public class BOLObject {
     
     private void UpdateCheckedCell(Case c, Case cc, HashMap hm){
         cc.setEtat(c.getEtat());
-        switch(c.getEtat()){
-            case vide:
-                if (Integer.valueOf(hm.get(Etat.arbre).toString()) >= 2
-                    || Integer.valueOf(hm.get(Etat.arbuste).toString()) >= 3
-                    || (Integer.valueOf(hm.get(Etat.arbre).toString()) == 1 && Integer.valueOf(hm.get(Etat.arbuste).toString()) == 2)) {
-                    cc.setEtat(Etat.jeunePousse);
-                }
-            break;
-            case jeunePousse:
-                if (Integer.valueOf(hm.get(Etat.arbre).toString()) + Integer.valueOf(hm.get(Etat.arbuste).toString()) <= 3) {
-                    cc.setEtat(Etat.arbuste);
-                }
-            break;
-            case arbuste :
-                if (c.getElapsedTime() == 1) {
-                    cc.setEtat(Etat.arbre);
-                    cc.setElapsedTime(0);
-                } else{
-                    cc.setElapsedTime(c.getElapsedTime() + 1);
-                }
-            break;
-            case arbre:
-                if (Integer.valueOf(hm.get(Etat.feu).toString()) <= 1) {
-                    if (IgnitionOrInfected(Etat.arbre)) {
-                        cc.setEtat(Etat.feu);
+        if (fireMode || invasionMode) {
+            switch(c.getEtat()){
+                case jeunePousse:
+                    if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
+                        if (Ignition(c.getEtat())) {
+                            cc.setEtat(Etat.feu);
+                        }
+                    } else {
+                        if (Infected(c.getEtat())) {
+                            cc.setEtat(Etat.infecte);
+                        }
                     }
-                }
-            break;
-            case feu:
-                cc.setEtat(Etat.cendre);
-            break;
-            case cendre:
-                cc.setEtat(Etat.vide);
-            break;
-            case infecte:
-                cc.setEtat(Etat.vide);
-            break;
+                break;
+                case arbuste :
+                    if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
+                        if (Ignition(c.getEtat())) {
+                            cc.setEtat(Etat.feu);
+                        }
+                    } else {
+                        if (Infected(c.getEtat())) {
+                            cc.setEtat(Etat.infecte);
+                        }
+                    }
+                break;
+                case arbre:
+                    if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
+                        if (Ignition(c.getEtat())) {
+                            cc.setEtat(Etat.feu);
+                        }
+                    } else {
+                        if (Infected(c.getEtat())) {
+                            cc.setEtat(Etat.infecte);
+                        }
+                    }
+                break;
+                case feu:
+                    cc.setEtat(Etat.cendre);
+                break;
+                case cendre:
+                    cc.setEtat(Etat.vide);
+                break;
+                case infecte:
+                    cc.setEtat(Etat.vide);
+                break;
+            }
+            
+        } else {
+            switch(c.getEtat()){
+                case vide:
+                    if (Integer.valueOf(hm.get(Etat.arbre).toString()) >= 2
+                        || Integer.valueOf(hm.get(Etat.arbuste).toString()) >= 3
+                        || (Integer.valueOf(hm.get(Etat.arbre).toString()) == 1 && Integer.valueOf(hm.get(Etat.arbuste).toString()) == 2)) {
+                        cc.setEtat(Etat.jeunePousse);
+                    }
+                break;
+                case jeunePousse:
+                    if (Integer.valueOf(hm.get(Etat.arbre).toString()) + Integer.valueOf(hm.get(Etat.arbuste).toString()) <= 3) {
+                        cc.setEtat(Etat.arbuste);
+                    }
+                break;
+                case arbuste :
+                    if (c.getElapsedTime() == 1) {
+                        cc.setEtat(Etat.arbre);
+                        cc.setElapsedTime(0);
+                    } else{
+                        cc.setElapsedTime(c.getElapsedTime() + 1);
+                    }
+                break;
+            }
         }
     }
     
@@ -237,7 +309,7 @@ public class BOLObject {
         return (int)((temp + temp2 + temp3)/3);
     }
     
-    private boolean IgnitionOrInfected (Etat etat){
+    private boolean Ignition (Etat etat){
         int rdm = CreateRandomNumber();
         
         switch(etat){
@@ -262,6 +334,38 @@ public class BOLObject {
                     return true;
                 }
                 if (rdm > 74 && rdm < 100) {
+                    return false;
+                }
+            break;
+        }
+        return false;
+    }
+    
+    private boolean Infected (Etat etat){
+        int rdm = CreateRandomNumber();
+        
+        switch(etat){
+            case jeunePousse:
+                if (rdm > 0 && rdm < 75) {
+                    return true;
+                }
+                if (rdm > 74 && rdm < 100) {
+                    return false;
+                }
+            break;
+            case arbuste:
+                if (rdm > 0 && rdm < 50) {
+                    return true;
+                }
+                if (rdm > 49 && rdm < 100) {
+                    return false;
+                }
+            break;
+            case arbre:
+                if (rdm > 0 && rdm < 25) {
+                    return true;
+                }
+                if (rdm > 24 && rdm < 100) {
                     return false;
                 }
             break;

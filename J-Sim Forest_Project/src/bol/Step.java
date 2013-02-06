@@ -1,6 +1,7 @@
 
 package bol;
 
+import gil.GILObject;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -15,7 +16,9 @@ public class Step implements ActionListener{
     int remainingTime;
     int stepNumber;
     int actualStepNumber;
+    
     BOLObject BOLObj;
+    GILObject GILObj;
     
     Timer timer;
 
@@ -117,17 +120,19 @@ public class Step implements ActionListener{
             return;
         }
         
-        //======================DEBUG=======================================================================
+//======================DEBUG=======================================================================
         
         for (int j = 0; j < BOLObj.getUpdatedTab().getY(); j++) {
+            
             for (int i = 0; i < BOLObj.getUpdatedTab().getX(); i++) {
+                
                 System.out.print(BOLObj.getUpdatedTab().getTab()[i][j] + " ");
             }
             System.out.print("\n");
         }
         System.out.print("\n\n");
 
-        //===================================================================================================
+//===================================================================================================
         
         BOLObj.setTab(BOLObj.getUpdatedTab().getTab(), BOLObj.getUpdatedTab().getX(), BOLObj.getUpdatedTab().getY());
         BOLObj.CheckTab();
