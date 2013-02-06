@@ -15,10 +15,10 @@ public class JSimForest_Project {
 
         
         
-        int stepNumber = 80;
+        int stepNumber = 100;
         int wantedXTab = 50;
         int wantedYTab = 50;
-        int TimeForOneStep = 1000;
+        int TimeForOneStep = 500;
         
         GILObject window = new GILObject();
         
@@ -29,7 +29,7 @@ public class JSimForest_Project {
         
         calculate.emptyTabGen(wantedXTab, wantedYTab);
         
-        Case[][] newTab = new Case[wantedXTab][wantedYTab];
+        Case[][] newTab = new Case[window.getGridLength()][window.getGridWidth()];
         for (int i = 0; i < wantedYTab; i++) {
             for (int j = 0; j < wantedXTab; j++) {
                 newTab[j][i] = new Case(Etat.vide);

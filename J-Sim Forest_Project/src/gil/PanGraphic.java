@@ -5,6 +5,8 @@ import bol.Etat;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -18,23 +20,25 @@ public class PanGraphic extends JPanel{
 
     public PanGraphic(){
         this.setPreferredSize(new Dimension(600, 500));
-        this.blackline = BorderFactory.createLineBorder(Color.black);
+        this.blackline = BorderFactory.createLineBorder(Color.black, 1);
         //this.CreateGrid();
     }
     
     private void CreateGrid() {
-        this.grid = new JPanel[this.gridWidth][this.gridLength];
-        this.setLayout(new GridLayout(this.gridWidth, this.gridLength));
+        //this.removeAll();
     }
     
     private void updateGrid() {
         this.CreateGrid();
+        System.out.println("Update grid");
+        System.out.println(this.tabToShow[3][2].getEtat());
         for(int y=0; y<this.gridLength; y++)
         {
             for(int x=0; x<this.gridWidth; x++)
             {
-                this.grid[x][y] = new JPanel();
+                //this.grid[x][y] = new JPanel();
                 this.grid[x][y].setBorder(blackline);
+                //this.add(this.grid[x][y]);
                 this.ConvertCellGrid(x, y);
                 this.ConvertGridCell(x, y);
             }
@@ -70,7 +74,6 @@ public class PanGraphic extends JPanel{
                 this.grid[x][y].setBackground(new Color(255, 255, 255));
                 break;
         }
-        this.add(this.grid[x][y]);
     }
     private void ConvertGridCell(int x, int y) 
     {
@@ -124,7 +127,29 @@ public class PanGraphic extends JPanel{
     }
 
     public void setGridWidth(int gridWidth) {
-        this.gridWidth = gridWidth;
+        if(this.gridWidth != gridWidth)
+        {
+            this.gridWidth = gridWidth;
+            this.removeAll();
+            this.grid = new JPanel[this.gridWidth][this.gridLength];
+            this.setLayout(new GridLayout(this.gridWidth, this.gridLength));
+
+            for(int y=0; y<this.gridLength; y++)
+            {
+                for(int x=0; x<this.gridWidth; x++)
+                {   
+                    this.grid[x][y] = new JPanel();
+                    this.add(this.grid[x][y]);
+                }
+            }
+        }
     }
     
+    class ButGenerationListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            System.out.println("Generation");
+
+        }
+    }
 }
