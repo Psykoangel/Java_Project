@@ -44,7 +44,6 @@ public class JSimForest_Project {
 //            calculate.setTab(calculate.getUpdatedTab().getTab(), calculate.getUpdatedTab().getX(), calculate.getUpdatedTab().getY());
 //            calculate.CheckTab();
 //        }
-        
         window.setTabToShow(calculate.getUpdatedTab().getTab());
     }
 }

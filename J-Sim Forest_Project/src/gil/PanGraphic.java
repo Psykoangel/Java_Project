@@ -14,23 +14,27 @@ public class PanGraphic extends JPanel{
     private int gridWidth;
     private int gridLength;
 
-    public PanGraphic( Case[][] tabToShow){
+    public PanGraphic(){
         this.setPreferredSize(new Dimension(600, 500));
         this.gridLength = 0;
         this.gridWidth = 0;
-        this.tabToShow = tabToShow;
-        this.grid = new JButton[gridWidth][gridLength];
+        this.CreateGrid(5, 5);
     }
     
-    private void updateGrid() {
+    private void CreateGrid(int gridWidth, int gridLength) {
+        this.gridWidth = gridWidth;
+        this.gridLength = gridLength;
+        this.grid = new JButton[this.gridWidth][this.gridLength];
         this.setLayout(new GridLayout(this.gridWidth, this.gridLength));
-        grid = new JButton[this.gridWidth][this.gridLength];
+    }
+    
+    private void updateGrid(Case[][] tabToShow) {
         for(int y=0; y<this.gridLength; y++)
         {
             for(int x=0; x<this.gridWidth; x++)
             {
                 this.ConvertCellGrid(x, y);
-                this.add(grid[x][y]); //ajout des boutons
+                this.add(this.grid[x][y]);
                 this.ConvertGridCell(x, y);
             }
         }
@@ -38,9 +42,16 @@ public class PanGraphic extends JPanel{
     
     private void ConvertCellGrid(int x, int y) 
     {
-        switch (tabToShow[x][y].getEtat()) 
+        switch (this.tabToShow[x][y].getEtat()) 
         {
             case vide:        //vide -- blanc -- 255,255,255 -- 0
+                for(int p=0; p<7; p++)
+                {
+                    for(int o=0; o<7; o++)
+                    {
+                        System.out.println(this.tabToShow[o][p].getEtat());
+                    }
+                }
                 this.grid[x][y].setBackground(new Color(255, 255, 255));
                 break;
             case jeunePousse:  //jeune pousse -- vert clair -- 147,208,81 -- 1
@@ -68,40 +79,40 @@ public class PanGraphic extends JPanel{
     }
     private void ConvertGridCell(int x, int y) 
     {
-        switch (grid[x][y].getBackground().getRGB()) {
+        switch (this.grid[x][y].getBackground().getRGB()) {
             case -1:        //vide -- blanc -- 255,255,255 -- 0
-                tabToShow[x][y].setEtat(Etat.vide);
+                this.tabToShow[x][y].setEtat(Etat.vide);
                 break;
             case -7090095:  //jeune pousse -- vert clair -- 147,208,81 -- 1
-                tabToShow[x][y].setEtat(Etat.jeunePousse);
+                this.tabToShow[x][y].setEtat(Etat.jeunePousse);
                 break;
             case -13330125: //arbuste -- vert -- 52,153,51 -- 2
-                tabToShow[x][y].setEtat(Etat.arbuste);
+                this.tabToShow[x][y].setEtat(Etat.arbuste);
                 break;
             case -16692992: //arbre -- vert foncée  -- 1,73,0 -- 3
-                tabToShow[x][y].setEtat(Etat.arbre);
+                this.tabToShow[x][y].setEtat(Etat.arbre);
                 break;
             case -1630437:  //feu -- rouge -- 231,31,27 -- 4
-                tabToShow[x][y].setEtat(Etat.feu);
+                this.tabToShow[x][y].setEtat(Etat.feu);
                 break;
             case -8289663:  //cendre -- gris -- 129,130,129 -- 5
-                tabToShow[x][y].setEtat(Etat.cendre);
+                this.tabToShow[x][y].setEtat(Etat.cendre);
                 break;
             case -9618794:  //infecte -- violet -- 109,58,150 -- 6
-                tabToShow[x][y].setEtat(Etat.infecte);
+                this.tabToShow[x][y].setEtat(Etat.infecte);
                 break;
             default:
-                tabToShow[x][y].setEtat(Etat.vide);
+                this.tabToShow[x][y].setEtat(Etat.vide);
                 break;
         }
     }
     
     public Case[][] getTabToShow() {
-        return tabToShow;
+        return this.tabToShow;
     }
 
     public void setTabToShow(Case[][] tabToShow) {
         this.tabToShow = tabToShow;
-        this.updateGrid();
+        this.updateGrid(this.tabToShow);
     }
 }
