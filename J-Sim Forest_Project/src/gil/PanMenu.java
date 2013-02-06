@@ -1,30 +1,67 @@
 package gil;
 
+
+import gil.action.*;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-public class PanMenu extends JPanel{
-    private JButton butSave;
-    private JButton butExport;
+public class PanMenu extends JMenuBar{
     private JButton butOpen;
     private JButton butGeneration;
+    private JButton butPlay;
     
     public PanMenu() {
-        this.setPreferredSize(new Dimension(200, 200));
+        this.setPreferredSize(new Dimension(30, 30));
         
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
+        JMenu file = new JMenu("Files");
+        this.add(file);
+        JMenuItem importItem = new JMenuItem("Import");
+        file.add(importItem);
+        JMenuItem exportItem = new JMenuItem("Export");
+        file.add(exportItem);
+        JMenuItem csvItem = new JMenuItem("Export CSV");
+        file.add(csvItem);
+        JMenuItem quitItem = new JMenuItem("Quit");
+        file.add(quitItem);
+        quitItem.addActionListener(new ButQuit());
+        
+        JMenu generate = new JMenu("Generation");
+        this.add(generate);
+        JMenuItem geneItem = new JMenuItem("Generation");
+        generate.add(geneItem);
+        geneItem.addActionListener(new ButGeneration());
+        JMenuItem playItem = new JMenuItem("Play");
+        generate.add(playItem);
+        JMenuItem pauseItem = new JMenuItem("Pause");
+        generate.add(pauseItem);
+        
+        JMenu mode = new JMenu("Mode");
+        this.add(mode);
+        JMenuItem fireItem = new JCheckBoxMenuItem("Fire");
+        mode.add(fireItem);
+        JMenuItem infectItem = new JCheckBoxMenuItem("Infected");
+        mode.add(infectItem);
+        this.setVisible(true);
+        
+        
+    }
+        
+   /*    
+        
+        
+        
+        
         //Case de départ du composant
         gbc.gridx = 0;
         gbc.gridy = 0;
-        //hauteur et largeur du composant
+        //Hauteur et largeur du composant
         gbc.gridheight = 1;
         gbc.gridwidth = 3;
         JLabel libMenu = new JLabel("Menu");
@@ -63,6 +100,14 @@ public class PanMenu extends JPanel{
         butGeneration.addActionListener(new ButGenerationListener());
         this.add(butGeneration, gbc);
         //---------------------------------------------
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 4;
+        this.butPlay = new JButton("Play");
+        butPlay.addActionListener(new ButGenerationListener());
+        this.add(butPlay, gbc);
+        //---------------------------------------------
     }
       
     //bouton Save
@@ -94,6 +139,22 @@ public class PanMenu extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             System.out.println("Generation");
+            
         }
     }
+
+    public JButton getButGeneration() {
+        return butGeneration;
+    }
+
+    public void setButGeneration(JButton butGeneration) {
+        this.butGeneration = butGeneration;
+    }
+    //bouton Play
+    class ButPlayListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            System.out.println("Play");
+        }
+    }*/
 }
