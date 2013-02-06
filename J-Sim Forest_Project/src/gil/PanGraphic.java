@@ -5,8 +5,6 @@ import bol.Etat;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -39,13 +37,13 @@ public class PanGraphic extends JPanel{
                 //this.grid[x][y] = new JPanel();
                 this.grid[x][y].setBorder(blackline);
                 //this.add(this.grid[x][y]);
-                this.ConvertCellGrid(x, y);
-                this.ConvertGridCell(x, y);
+                this.ConvertToGrid(x, y);
+                this.ConvertToCell(x, y);
             }
         }
     }
     
-    private void ConvertCellGrid(int x, int y) 
+    private void ConvertToGrid(int x, int y) 
     {
         switch (this.tabToShow[x][y].getEtat()) 
         {
@@ -75,7 +73,7 @@ public class PanGraphic extends JPanel{
                 break;
         }
     }
-    private void ConvertGridCell(int x, int y) 
+    private void ConvertToCell(int x, int y) 
     {
         switch (this.grid[x][y].getBackground().getRGB()) {
             case -1:        //vide -- blanc -- 255,255,255 -- 0
@@ -144,12 +142,12 @@ public class PanGraphic extends JPanel{
             }
         }
     }
-    
-    class ButGenerationListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            System.out.println("Generation");
-
-        }
-    }
+//    
+//    class ButGenerationListener implements ActionListener{
+//        @Override
+//        public void actionPerformed(ActionEvent event) {
+//            System.out.println("Generation");
+//
+//        }
+//    }
 }

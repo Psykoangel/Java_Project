@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
         this.splitBas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panText, panProgBar);
         this.splitBas.setDividerLocation(300);
 
-        this.getContentPane().add(panMenu, BorderLayout.NORTH);
+        this.setJMenuBar(panMenu);
         this.getContentPane().add(panPara, BorderLayout.EAST);
         this.getContentPane().add(splitBas, BorderLayout.SOUTH);
         this.getContentPane().add(panGraphic, BorderLayout.CENTER);

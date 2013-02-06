@@ -22,9 +22,13 @@ public class GILObject {
         return this.tabToShow;
     }
 
-    public void setTabToShow(Case[][] tabToShow) {
+    public void setTabToShow(Case[][] tabToShow, int gridLength, int gridWidth) {
         this.tabToShow = tabToShow;
         this.mainFrame.setTabToShow(this.tabToShow);
+        this.gridLength = gridLength;
+        this.mainFrame.setGridLength(this.gridLength);
+        this.gridWidth = gridWidth;
+        this.mainFrame.setGridWidth(this.gridWidth);
     }
 
     public int getGridLength() {
@@ -32,19 +36,9 @@ public class GILObject {
         return gridLength;
     }
 
-    public void setGridLength(int gridLength) {
-        this.gridLength = gridLength;
-        this.mainFrame.setGridLength(this.gridLength);
-    }
-
     public int getGridWidth() {
         this.gridWidth = this.mainFrame.getGridWidth();
         return gridWidth;
-    }
-
-    public void setGridWidth(int gridWidth) {
-        this.gridWidth = gridWidth;
-        this.mainFrame.setGridWidth(this.gridWidth);
     }
     
 }

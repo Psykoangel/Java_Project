@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 public class PanPara extends JPanel{
     private JButton butGeneration;
+    private JButton butValid;
     private JTextField tailleX;
     private JTextField tailleY;
     private MainFrame mainframe;
@@ -19,6 +20,7 @@ public class PanPara extends JPanel{
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
+        
         //---------------------------------------------        
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -27,6 +29,8 @@ public class PanPara extends JPanel{
         this.butGeneration = new JButton("Génération");
         //this.butGeneration.addActionListener(new ButGeneration(this.mainframe, this.tailleX.getText(), this.tailleY.getText()));
         this.add(butGeneration, gbc);
+        
+        
         //---------------------------------------------
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -37,13 +41,20 @@ public class PanPara extends JPanel{
         this.add(tailleX ,gbc);
         //tailleX.getText()
         //---------------------------------------------
-        gbc.gridx = 3;
-        gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 1;
         this.tailleY = new JTextField("100");
         this.tailleY.setPreferredSize(new Dimension(50, 20));
         this.add(tailleY ,gbc);
-        //---------------------------------------------
+        //---------------------------------------------        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 2;
+        this.butValid = new JButton("Valider");
+        //this.butValid.addActionListener(new ButGeneration(this.mainframe, this.tailleX.getText(), this.tailleY.getText()));
+        this.add(butValid, gbc);
     }
 }
