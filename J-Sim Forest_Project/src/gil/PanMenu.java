@@ -1,12 +1,11 @@
 package gil;
 
 
-import gil.action.*;
+import gil.action.ButGeneration;
+import gil.action.ButQuit;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class PanMenu extends JMenuBar{
@@ -22,42 +21,50 @@ public class PanMenu extends JMenuBar{
         
         JMenu file = new JMenu("Files");
         this.add(file);
+        
+        
         JMenuItem importItem = new JMenuItem("Import");
         file.add(importItem);
+        
         JMenuItem exportItem = new JMenuItem("Export");
         file.add(exportItem);
+        
         JMenuItem csvItem = new JMenuItem("Export CSV");
         file.add(csvItem);
+        
         JMenuItem quitItem = new JMenuItem("Quit");
         file.add(quitItem);
         quitItem.addActionListener(new ButQuit());
         
+        
         JMenu generate = new JMenu("Generation");
         this.add(generate);
+        
         JMenuItem geneItem = new JMenuItem("Generation");
         generate.add(geneItem);
         geneItem.addActionListener(new ButGeneration());
+        
         JMenuItem playItem = new JMenuItem("Play");
         generate.add(playItem);
+        
         JMenuItem pauseItem = new JMenuItem("Pause");
         generate.add(pauseItem);
         
+        
         JMenu mode = new JMenu("Mode");
         this.add(mode);
+        
         JMenuItem fireItem = new JCheckBoxMenuItem("Fire");
         mode.add(fireItem);
+        
         JMenuItem infectItem = new JCheckBoxMenuItem("Infected");
         mode.add(infectItem);
+        
+        
         this.setVisible(true);
-        
-        
     }
         
    /*    
-        
-        
-        
-        
         //Case de départ du composant
         gbc.gridx = 0;
         gbc.gridy = 0;
