@@ -16,14 +16,6 @@ public class DALObject {
     private ResultSet result;
     private ArrayList lst;
     private ArrayList<String[]> completeLst;
-    
-    //Accesseurs
-    public ArrayList getLst() {
-        return lst;
-    }
-    public ArrayList<String[]> getCompleteLst() {
-        return completeLst;
-    }
 
     //Constructeur
     public DALObject() {
@@ -90,11 +82,11 @@ public class DALObject {
     
     //Récupération des information de la bdd pour récupérer les données de la sauvegarde
     //Envoi DAL -> BOL
-    public ArrayList selectSave() throws SQLException {
+    public ArrayList selectSave(String pName) throws SQLException {
         int test = 1;
-        String query = ("SELECT TX, TY, STT, SN, GRID FROM save WHERE ID = ?;");
+        String query = ("SELECT TX, TY, STT, SN, GRID FROM save WHERE NAME = ?;");
         preStmt = cnx.prepareStatement(query);
-        preStmt.setInt(1, test);
+        preStmt.setString(1, pName);
         result = preStmt.executeQuery();
         lst = new ArrayList<>();
         while (result.next()) {
@@ -139,13 +131,13 @@ public class DALObject {
     // BOL -> DAL
     public void insertSave(String pName, int pTx, int pTy, int pStt, int pSn, String pGrid) throws SQLException {
         String query = ("INSERT INTO save (NAME, TX, TY, STT, SN, GRID) VALUES (?, ?, ?, ?, ?, ?);");
+        preStmt = cnx.prepareStatement(query);
         preStmt.setString(1, pName);
         preStmt.setInt(2, pTx);
         preStmt.setInt(3, pTy);
         preStmt.setInt(4, pStt);
         preStmt.setInt(5, pSn);
         preStmt.setString(6, pGrid);
-        preStmt = cnx.prepareStatement(query);
         preStmt.execute();
         preStmt.close();
     }
