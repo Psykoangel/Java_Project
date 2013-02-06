@@ -13,9 +13,9 @@ public class JSimForest_Project {
         System.out.println("=== J-sim Forest ===");
         
         
-        int stepNumber = 8;
-        int wantedXTab = 7;
-        int wantedYTab = 7;
+        int stepNumber = 80;
+        int wantedXTab = 50;
+        int wantedYTab = 50;
         int TimeForOneStep = 1000;
         
         GILObject window = new GILObject();
@@ -43,6 +43,8 @@ public class JSimForest_Project {
         System.out.print("\n");
         
         calculate.setUpdatedTab(newTab, wantedXTab, wantedYTab);
+        calculate.setFireMode(false);
+        calculate.setInvasionMode(false);
         
         timeStep.updateBOLObject(calculate);
         

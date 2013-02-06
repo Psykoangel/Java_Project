@@ -17,7 +17,8 @@ public class BOLObject {
     
     // Constructors
     public BOLObject(){
-        
+        fireMode = false;
+        invasionMode = false;
     }
     
     
@@ -26,20 +27,24 @@ public class BOLObject {
         this.tab.setTab(tab);
         this.tab.setX(l);
         this.tab.setY(w);
+        //System.out.println("Tab updated !");
     }
 
     public void setUpdatedTab(Case[][] tab, int l, int w) {
         this.updatedTab.setTab(tab);
         this.updatedTab.setX(l);
         this.updatedTab.setY(w);
+        //System.out.println("UpdatedTab updated !");
     }
 
     public void setFireMode(boolean fireMode) {
         this.fireMode = fireMode;
+        //System.out.println("fireMode activated !");
     }
 
     public void setInvasionMode(boolean invasionMode) {
         this.invasionMode = invasionMode;
+        //System.out.println("invasionMode updated !");
     }
     
     
@@ -70,6 +75,7 @@ public class BOLObject {
     public Tableau emptyTabGen(int x, int y){
         this.tab = new Tableau(x, y);
         this.updatedTab = new Tableau(x, y);
+        //System.out.println("Empty Tables created !");
         return tab;
     }
     
@@ -116,7 +122,8 @@ public class BOLObject {
     private ArrayList getVecinity(Neighborhood nh, int length, int width, int xTabSize, int yTabSize){
         
         ArrayList<Case> VecinityList = new ArrayList<>();
-        if (nh == Neighborhood.Moore) {
+        if (nh == Neighborhood.VonNeumann) {
+            //System.out.println("Voisinage de Von Neumann demande !");
             
             if (length < xTabSize -1) {//   case droite
                 VecinityList.add(tab.getTab()[length + 1][width]);
@@ -135,6 +142,7 @@ public class BOLObject {
             }
             
         } else {
+            //System.out.println("Voisinage de Moore demande !");
             
             if (length < xTabSize -1 && width > 0) {//   case droite haute
                 VecinityList.add(tab.getTab()[length + 1][width - 1]);
@@ -169,6 +177,7 @@ public class BOLObject {
             }
         }
         
+        //System.out.println("Recuperation du voisinage !");
         return VecinityList;// retourne les cases du voisinage de la case donne en parametre.
     }
     
@@ -184,6 +193,7 @@ public class BOLObject {
         countList.put(Etat.infecte, 0);
         
         
+        //System.out.println("Debut du comptage d etat dans le voisinage !");
         for (Iterator it = l.iterator(); it.hasNext();) {//   pr chaque case du voisinage, on cherche son etat
             Case c = (Case) it.next();
             switch(c.getEtat()){
@@ -224,12 +234,15 @@ public class BOLObject {
                 break;
             }
         }
+        //System.out.println("Fin du comptage d etat du voisinage !");
         return countList;
     }
     
     private void UpdateCheckedCell(Case c, Case cc, HashMap hm){
+        //System.out.println("Debut de modification d une cellule dans updatedTab !");
         cc.setEtat(c.getEtat());
         if (fireMode || invasionMode) {
+        //System.out.println("modification en fireMode/InvasionMode !");
             switch(c.getEtat()){
                 case jeunePousse:
                     if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
@@ -276,6 +289,7 @@ public class BOLObject {
             }
             
         } else {
+        //System.out.println("Modification d une cellule en normal !");
             switch(c.getEtat()){
                 case vide:
                     if (Integer.valueOf(hm.get(Etat.arbre).toString()) >= 2
@@ -299,6 +313,8 @@ public class BOLObject {
                 break;
             }
         }
+        
+        //System.out.println("Fin de Modification de la cellule !");
     }
     
     private int CreateRandomNumber(){
@@ -306,12 +322,14 @@ public class BOLObject {
         int temp = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
         int temp2 = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
         int temp3 = (int)(Math.random() * (hightPct - lowerPct)) + lowerPct;
+        //System.out.println("Creation un nombre aléatoire termine !");
         return (int)((temp + temp2 + temp3)/3);
     }
     
     private boolean Ignition (Etat etat){
         int rdm = CreateRandomNumber();
         
+        //System.out.println("Retour d un bouleen en fonction du pourcentage pour FireMode!");
         switch(etat){
             case jeunePousse:
                 if (rdm > 0 && rdm < 25) {
@@ -344,6 +362,7 @@ public class BOLObject {
     private boolean Infected (Etat etat){
         int rdm = CreateRandomNumber();
         
+        //System.out.println("Retour d un bouleen en fonction du pourcentage pour InvasionMode!");
         switch(etat){
             case jeunePousse:
                 if (rdm > 0 && rdm < 75) {
