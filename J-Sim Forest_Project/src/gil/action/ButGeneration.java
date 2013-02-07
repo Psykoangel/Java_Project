@@ -10,20 +10,20 @@ public class ButGeneration implements ActionListener {
     private String tailleY;
     private MainFrame mainFrame;
 
+    public ButGeneration() {
+    }
+
     public ButGeneration(MainFrame mainFrame, String tailleX, String tailleY) {
         this.tailleX = tailleX;
         this.tailleY = tailleY;
         this.mainFrame = mainFrame;
     }
 
-    public ButGeneration() {
-    }
-
     @Override
     public void actionPerformed(ActionEvent event) {
         System.out.println("Generation");
-        this.mainFrame.setGridLength(Integer.valueOf(this.tailleX));
-        this.mainFrame.setGridWidth(Integer.valueOf(this.tailleY));
+        //this.mainFrame.setGridLength(Integer.valueOf(this.tailleX));
+        //this.mainFrame.setGridWidth(Integer.valueOf(this.tailleY));
     }
 
     public String getTailleX() {

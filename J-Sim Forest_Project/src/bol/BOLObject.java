@@ -69,7 +69,7 @@ public class BOLObject {
     public Tableau emptyTabGen(){
         this.tab = new Tableau();
         this.updatedTab = new Tableau();
-        return tab;
+        return updatedTab;
     }
     
     public Tableau emptyTabGen(int x, int y){

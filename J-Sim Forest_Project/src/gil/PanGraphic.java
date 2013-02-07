@@ -10,11 +10,15 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 public class PanGraphic extends JPanel{
+    
     private JPanel[][] grid;
+    
     private Case[][] tabToShow;
+    
+    private Border blackline;
+    
     private int gridWidth;
     private int gridLength;
-    private Border blackline;
 
     public PanGraphic(){
         this.setPreferredSize(new Dimension(600, 500));
@@ -27,12 +31,12 @@ public class PanGraphic extends JPanel{
     }
     
     private void updateGrid() {
-        this.CreateGrid();
-        System.out.println("Update grid");
-        System.out.println(this.tabToShow[3][2].getEtat());
-        for(int y=0; y<this.gridLength; y++)
+        //this.CreateGrid();
+        //System.out.println("Update grid");
+        //System.out.println(this.tabToShow[3][2].getEtat());
+        for(int y = 0; y < this.gridLength; y++)
         {
-            for(int x=0; x<this.gridWidth; x++)
+            for(int x = 0; x < this.gridWidth; x++)
             {
                 //this.grid[x][y] = new JPanel();
                 this.grid[x][y].setBorder(blackline);
@@ -107,21 +111,21 @@ public class PanGraphic extends JPanel{
         return this.tabToShow;
     }
 
+    public int getGridLength() {
+        return gridLength;
+    }
+
+    public int getGridWidth() {
+        return gridWidth;
+    }
+
     public void setTabToShow(Case[][] tabToShow) {
         this.tabToShow = tabToShow;
         this.updateGrid();
     }
 
-    public int getGridLength() {
-        return gridLength;
-    }
-
     public void setGridLength(int gridLength) {
         this.gridLength = gridLength;
-    }
-
-    public int getGridWidth() {
-        return gridWidth;
     }
 
     public void setGridWidth(int gridWidth) {
@@ -132,9 +136,9 @@ public class PanGraphic extends JPanel{
             this.grid = new JPanel[this.gridWidth][this.gridLength];
             this.setLayout(new GridLayout(this.gridWidth, this.gridLength));
 
-            for(int y=0; y<this.gridLength; y++)
+            for(int y = 0; y < this.gridLength; y++)
             {
-                for(int x=0; x<this.gridWidth; x++)
+                for(int x = 0; x < this.gridWidth; x++)
                 {   
                     this.grid[x][y] = new JPanel();
                     this.add(this.grid[x][y]);
@@ -142,12 +146,4 @@ public class PanGraphic extends JPanel{
             }
         }
     }
-//    
-//    class ButGenerationListener implements ActionListener{
-//        @Override
-//        public void actionPerformed(ActionEvent event) {
-//            System.out.println("Generation");
-//
-//        }
-//    }
 }

@@ -6,12 +6,27 @@ import gil.action.ButQuit;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import javax.swing.*;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class PanMenu extends JMenuBar{
-    private JButton butOpen;
-    private JButton butGeneration;
-    private JButton butPlay;
+    
+    JMenu file;
+    JMenu generate;
+    JMenu mode;
+    
+    JMenuItem ReplayItem;
+    JMenuItem importItem;
+    JMenuItem exportItem;
+    JMenuItem csvItem;
+    JMenuItem quitItem;
+    JMenuItem geneItem;
+    JMenuItem playItem;
+    JMenuItem pauseItem;
+    JMenuItem fireItem;
+    JMenuItem infectItem;
     
     public PanMenu() {
         this.setPreferredSize(new Dimension(30, 30));
@@ -19,149 +34,104 @@ public class PanMenu extends JMenuBar{
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
-        JMenu file = new JMenu("Files");
+        file = new JMenu("Fichiers");
         this.add(file);
         
         
-            JMenuItem importItem = new JMenuItem("Import");
+            ReplayItem = new JMenuItem("Faire une autre simulation");
+            file.add(ReplayItem);
+        
+            importItem = new JMenuItem("Importer depuis la base de données");
             file.add(importItem);
 
-            JMenuItem exportItem = new JMenuItem("Export");
+            exportItem = new JMenuItem("Export de la simulation");
             file.add(exportItem);
 
-            JMenuItem csvItem = new JMenuItem("Export CSV");
+            csvItem = new JMenuItem("Export de la simulation au format CSV");
             file.add(csvItem);
 
-            JMenuItem quitItem = new JMenuItem("Quit");
+            quitItem = new JMenuItem("Quitter");
             file.add(quitItem);
             quitItem.addActionListener(new ButQuit());
         
         
-        JMenu generate = new JMenu("Generation");
+        generate = new JMenu("Simulation");
         this.add(generate);
         
-            JMenuItem geneItem = new JMenuItem("Generation");
+            geneItem = new JMenuItem("Lancer la génération");
             generate.add(geneItem);
             geneItem.addActionListener(new ButGeneration());
+            geneItem.setEnabled(false);
 
-            JMenuItem playItem = new JMenuItem("Play");
+            playItem = new JMenuItem("Lancer le pas suivant");
             generate.add(playItem);
+            playItem.setEnabled(false);
 
-            JMenuItem pauseItem = new JMenuItem("Pause");
+            pauseItem = new JMenuItem("Pause");
             generate.add(pauseItem);
+            pauseItem.setEnabled(false);
         
         
-        JMenu mode = new JMenu("Mode");
+        mode = new JMenu("Modes de simulation");
         this.add(mode);
         
-            JMenuItem fireItem = new JCheckBoxMenuItem("Fire");
+            fireItem = new JCheckBoxMenuItem("Mode feu");
             mode.add(fireItem);
 
-            JMenuItem infectItem = new JCheckBoxMenuItem("Infected");
+            infectItem = new JCheckBoxMenuItem("Mode invasion d'insects");
             mode.add(infectItem);
-        
-        
-        this.setVisible(true);
     }
-        
-   /*    
-        //Case de départ du composant
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        //Hauteur et largeur du composant
-        gbc.gridheight = 1;
-        gbc.gridwidth = 3;
-        JLabel libMenu = new JLabel("Menu");
-        this.add(libMenu, gbc);
-        //---------------------------------------------
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        this.butSave = new JButton("Save");
-        butSave.addActionListener(new ButSaveListener());
-        this.add(butSave, gbc);
-        //---------------------------------------------
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        this.butExport = new JButton("Export");
-        butExport.addActionListener(new ButExportListener());
-        this.add(butExport ,gbc);
-        //---------------------------------------------
-        gbc.gridx = 3;
-        gbc.gridy = 3;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        this.butOpen = new JButton("Open");
-        butOpen.addActionListener(new ButOpenListener());
-        this.add(butOpen, gbc);
-        //---------------------------------------------
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 4;
-        this.butGeneration = new JButton("Génération");
-        butGeneration.addActionListener(new ButGenerationListener());
-        this.add(butGeneration, gbc);
-        //---------------------------------------------
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 4;
-        this.butPlay = new JButton("Play");
-        butPlay.addActionListener(new ButGenerationListener());
-        this.add(butPlay, gbc);
-        //---------------------------------------------
+
+    public JMenuItem getReplayItem() {
+        return ReplayItem;
     }
-      
-    //bouton Save
-    class ButSaveListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            System.out.println("Save");
-        }
+
+    public JMenuItem getCsvItem() {
+        return csvItem;
     }
-      
-    //bouton Export
-    class ButExportListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            System.out.println("Export");
-        }
+
+    public JMenuItem getExportItem() {
+        return exportItem;
     }
-      
-    //bouton Open
-    class ButOpenListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            System.out.println("Open");
-        }
+
+    public JMenu getFile() {
+        return file;
+    }
+
+    public JMenuItem getFireItem() {
+        return fireItem;
+    }
+
+    public JMenuItem getGeneItem() {
+        return geneItem;
+    }
+
+    public JMenu getGenerate() {
+        return generate;
+    }
+
+    public JMenuItem getImportItem() {
+        return importItem;
+    }
+
+    public JMenuItem getInfectItem() {
+        return infectItem;
+    }
+
+    public JMenu getMode() {
+        return mode;
+    }
+
+    public JMenuItem getPauseItem() {
+        return pauseItem;
+    }
+
+    public JMenuItem getPlayItem() {
+        return playItem;
+    }
+
+    public JMenuItem getQuitItem() {
+        return quitItem;
     }
     
-    //bouton Génération
-    class ButGenerationListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            System.out.println("Generation");
-            
-        }
-    }
-
-    public JButton getButGeneration() {
-        return butGeneration;
-    }
-
-    public void setButGeneration(JButton butGeneration) {
-        this.butGeneration = butGeneration;
-    }
-    //bouton Play
-    class ButPlayListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            System.out.println("Play");
-        }
-    }*/
 }

@@ -20,9 +20,9 @@ public class JSimForest_Project {
         int wantedYTab = 7;
         int TimeForOneStep = 1000;
         
-        GILObject window = new GILObject();
-        
         BOLObject calculate = new BOLObject();
+        
+        GILObject window = new GILObject(calculate);
         
         Step timeStep = new Step(TimeForOneStep, calculate, window);
         
@@ -56,6 +56,6 @@ public class JSimForest_Project {
         timeStep.updateBOLObject(calculate);
         
         timeStep.setRemainingTime(stepNumber);
-        timeStep.start();
+        //timeStep.start();
     }
 }
