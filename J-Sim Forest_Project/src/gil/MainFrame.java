@@ -21,28 +21,7 @@ public class MainFrame extends JFrame {
     private Case[][] tabToShow;
     private int gridWidth;
     private int gridLength;
-
     
-    public MainFrame() {
-        //this.setLocationRelativeTo(null);
-        this.setTitle("J-Sim Forest");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
-
-        this.panMenu = new PanMenu();
-        this.panGraphic = new PanGraphic();
-        this.panPara = new PanPara();
-        this.panText = new PanText();
-        this.panProgBar = new PanProgBar();
-
-        this.splitBas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panText, panProgBar);
-        this.splitBas.setDividerLocation(300);
-
-        this.setJMenuBar(panMenu);
-        this.getContentPane().add(panGraphic, BorderLayout.CENTER);
-        this.getContentPane().add(panPara, BorderLayout.EAST);
-        this.getContentPane().add(splitBas, BorderLayout.SOUTH);
-    }
 
     MainFrame(BOLObject BOLObj) {
         //this.setLocationRelativeTo(null);
@@ -58,7 +37,7 @@ public class MainFrame extends JFrame {
         
         //ActionListener on component Application
         this.panMenu.getQuitItem().addActionListener(new ButQuit());
-        this.panMenu.getGeneItem().addActionListener(new ButGeneration());
+        this.panMenu.getGeneItem().addActionListener(new ButGeneration(BOLObj, this));
         this.panMenu.getFireItem().addActionListener(new AddMode(BOLObj, this));
         this.panMenu.getInfectItem().addActionListener(new AddMode(BOLObj, this));
         
@@ -66,6 +45,9 @@ public class MainFrame extends JFrame {
         this.panPara.getButStepValid().addActionListener(new ValidStepParam(BOLObj, this));
         this.panPara.getCbFireMode().addActionListener(new AddMode(BOLObj, this));
         this.panPara.getCbInvasionMode().addActionListener(new AddMode(BOLObj, this));
+        this.panPara.getButGeneration().addActionListener(new ButGeneration(BOLObj, this));
+        this.panPara.getButPause().addActionListener(new ButPause(BOLObj, this));
+        this.panPara.getButNext().addActionListener(new ButNextStep(BOLObj, this));
 
         this.splitBas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panText, panProgBar);
         this.splitBas.setDividerLocation(300);

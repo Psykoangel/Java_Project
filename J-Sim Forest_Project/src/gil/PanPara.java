@@ -409,6 +409,10 @@ public class PanPara extends JPanel{
     public JLabel getSliderNumber() {
         return SliderNumber;
     }
+
+    public JButton getButPause() {
+        return butPause;
+    }
     
     
 }

@@ -41,6 +41,10 @@ public class BOLObject {
         this.updatedTab.setY(w);
         //System.out.println("UpdatedTab updated !");
     }
+    
+    public void setUpdatedTabColorPosition(int positionX, int positionY, Etat e){
+        this.updatedTab.getTab()[positionX][positionY].setEtat(e);
+    }
 
     public void setFireMode(boolean fireMode) {
         this.fireMode = fireMode;

@@ -21,8 +21,16 @@ public class ValidParam implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         PanPara panelParam = (PanPara) ((Component)e.getSource()).getParent();
-        int abscisse = Integer.valueOf(panelParam.getTailleX().getText());
-        int ordonnee = Integer.valueOf(panelParam.getTailleY().getText());
+        int abscisse = 100;
+        int ordonnee = 100;
+        try {
+            abscisse = Integer.valueOf(panelParam.getTailleX().getText());
+        } catch (Exception exp) {
+        }
+        try {
+            ordonnee = Integer.valueOf(panelParam.getTailleY().getText());
+        } catch (Exception ex) {
+        }
         this.frame.setTabToShow(obj.emptyTabGen(abscisse, ordonnee).getTab(), abscisse, ordonnee);
         
         
@@ -31,7 +39,7 @@ public class ValidParam implements ActionListener {
         panelParam.getTfTailleX().setEnabled(false);
         panelParam.getTfTailleY().setEnabled(false);
         panelParam.getButValid().setVisible(false);
-        //this.frame.getPanGraphic().repaint();
+        
         panelParam.getTfStep().setVisible(true);
         panelParam.getTfStepNumber().setVisible(true);
         panelParam.getSlStepSpeed().setVisible(true);

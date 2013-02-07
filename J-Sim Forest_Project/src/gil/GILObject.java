@@ -11,11 +11,6 @@ public class GILObject {
     private int gridWidth;
     private int gridLength;
     
-    
-    public GILObject () {
-        this.mainFrame = new MainFrame();
-        this.mainFrame.setVisible(true);
-    }
 
     public GILObject(BOLObject calculate) {
         this.BOLObj = calculate;

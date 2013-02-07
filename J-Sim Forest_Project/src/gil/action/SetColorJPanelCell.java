@@ -2,6 +2,8 @@
 package gil.action;
 
 import bol.BOLObject;
+import bol.Etat;
+import gil.GridCase;
 import gil.MainFrame;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -20,32 +22,39 @@ public class SetColorJPanelCell implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        JPanel selectedPanel = (JPanel) e.getSource();
+        GridCase sgc = (GridCase) e.getSource();
         String selectedButton = frame.getPanPara().getCaseGroup().getSelection().getActionCommand();
         
         switch(selectedButton){
             case "Vide" :
-                selectedPanel.setBackground(new Color(-1));
+                sgc.setBackground(new Color(-1));
+                obj.setUpdatedTabColorPosition(sgc.getPositionX(), sgc.getPositionY(), Etat.vide);
             break;
             case "Jeune pousse" :
-                selectedPanel.setBackground(new Color(-7090095));
+                sgc.setBackground(new Color(-7090095));
+                obj.setUpdatedTabColorPosition(sgc.getPositionX(), sgc.getPositionY(), Etat.jeunePousse);
             break;
             case "Arbustre" :
-                selectedPanel.setBackground(new Color(-13330125));
+                sgc.setBackground(new Color(-13330125));
+                obj.setUpdatedTabColorPosition(sgc.getPositionX(), sgc.getPositionY(), Etat.arbuste);
             break;
             case "Arbre" :
-                selectedPanel.setBackground(new Color(-16692992));
+                sgc.setBackground(new Color(-16692992));
+                obj.setUpdatedTabColorPosition(sgc.getPositionX(), sgc.getPositionY(), Etat.arbre);
             break;
             case "Feu" :
-                selectedPanel.setBackground(new Color(-1630437));
+                sgc.setBackground(new Color(-1630437));
+                obj.setUpdatedTabColorPosition(sgc.getPositionX(), sgc.getPositionY(), Etat.feu);
             break;
             case "Cendre" :
-                selectedPanel.setBackground(new Color(-8289663));
+                sgc.setBackground(new Color(-8289663));
+                obj.setUpdatedTabColorPosition(sgc.getPositionX(), sgc.getPositionY(), Etat.cendre);
             break;
             case "Insectes" :
-                selectedPanel.setBackground(new Color(-9618794));
+                sgc.setBackground(new Color(-9618794));
+                obj.setUpdatedTabColorPosition(sgc.getPositionX(), sgc.getPositionY(), Etat.infecte);
             break;
-        }
+        }        
     }
 
     @Override
@@ -58,10 +67,25 @@ public class SetColorJPanelCell implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        JPanel selectedPanel = (JPanel) e.getSource();
+        
+        Color x = selectedPanel.getBackground();
+        if (x.equals(Color.WHITE)) {
+            selectedPanel.setBackground(new Color(50, 50, 50)); 
+        } else {
+            selectedPanel.setBackground(x); 
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        JPanel selectedPanel = (JPanel) e.getSource();
+        
+        Color x = selectedPanel.getBackground();
+        if (x.equals(new Color(50,50,50))) {
+            selectedPanel.setBackground(Color.WHITE);
+        } else {
+            selectedPanel.setBackground(x);
+        }
     }
-    
-}
+} 

@@ -1,15 +1,11 @@
 
 package bol;
 
-import gil.GILObject;
+import gil.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-/**
- * 
- * @author Psyko
- */
 public class Step implements ActionListener{
     
     int lastUpdate;
@@ -19,7 +15,7 @@ public class Step implements ActionListener{
     int actualStepNumber;
     
     BOLObject BOLObj;
-    GILObject GILObj;
+    MainFrame frame;
     
     Timer timer;
 
@@ -31,12 +27,11 @@ public class Step implements ActionListener{
         timer.setInitialDelay(0);
     }
     
-    public Step(int msTime, BOLObject calculate, GILObject window) {
+    public Step(int msTime, BOLObject calculate) {
         
         remainingTime = 100;
         this.actualStepNumber = 0;
         this.BOLObj = calculate;
-        this.GILObj = window;
         timer = new Timer(msTime, this);
         timer.setInitialDelay(0);
     }
@@ -72,7 +67,9 @@ public class Step implements ActionListener{
     }
     
     
-    public void start(){
+    public void start(BOLObject obj, MainFrame frame){
+        this.BOLObj = obj;
+        this.frame = frame;
         resume();
     }
     
@@ -80,25 +77,25 @@ public class Step implements ActionListener{
         pause();
     }
     
-    void update(){
-        int now = this.actualStepNumber++;
-        int elapsed = now - lastUpdate;
-        remainingTime -= elapsed;
-        lastUpdate = now;
-        
-        if (remainingTime < 0) {
-            remainingTime = 0;
-        }
-        if (remainingTime == 0) {
+    public void update(){
+        if (remainingTime != 0) {
+            int now = this.actualStepNumber++;
+            int elapsed = now - lastUpdate;
+            remainingTime -= elapsed;
+            lastUpdate = now;
+        } else {
+            this.frame.getPanPara().getButPause().setVisible(false);
+            this.frame.getPanPara().getButGeneration().setVisible(true);
             timer.stop();
             return;
         }
+        //System.out.println(this.actualStepNumber);
+        //System.out.println(this.remainingTime);
         
-        
-        this.GILObj.setTabToShow(this.BOLObj.getUpdatedTab().getTab(), this.BOLObj.getUpdatedTab().getX(), this.BOLObj.getUpdatedTab().getY());
-        BOLObj.setTab(GILObj.getTabToShow(), GILObj.getGridWidth(), GILObj.getGridLength());
-        //System.out.println(GILObj.getGridWidth()+"|"+GILObj.getGridLength());
+        this.frame.setTabToShow(this.BOLObj.getUpdatedTab().getTab(), this.BOLObj.getUpdatedTab().getX(), this.BOLObj.getUpdatedTab().getY());
+        BOLObj.setTab(frame.getTabToShow(), frame.getGridWidth(), frame.getGridLength());
         BOLObj.CheckTab();
+        this.frame.getPanGraphic().repaint();
         this.updateBOLObject(BOLObj);
     }
     
@@ -111,6 +108,12 @@ public class Step implements ActionListener{
         int now = this.actualStepNumber;
         remainingTime -= (now - lastUpdate);
         timer.stop();
+    }
+    
+    public void nextStep(BOLObject obj, MainFrame frame){
+        this.BOLObj = obj;
+        this.frame = frame;
+        update();
     }
 
     @Override

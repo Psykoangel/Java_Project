@@ -13,7 +13,6 @@ public class ValidStepParam implements ActionListener {
     BOLObject obj;
     MainFrame frame;
     
-
     public ValidStepParam(BOLObject obj, MainFrame frame) {
         this.obj = obj;
         this.frame = frame;
@@ -22,7 +21,11 @@ public class ValidStepParam implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         PanPara panelParam = (PanPara) ((Component)e.getSource()).getParent();
-        int StepNumber = Integer.valueOf(panelParam.getTfStepNumber().getText());
+        int StepNumber = 15;
+        try {
+            StepNumber = Integer.valueOf(panelParam.getTfStepNumber().getText());
+        } catch (Exception exp) {
+        }
         int StepSpeed = panelParam.getSlStepSpeed().getValue();
         obj.getStep().setStepParameter(StepNumber, StepSpeed);
         
