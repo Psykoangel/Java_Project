@@ -119,6 +119,10 @@ public class PanGraphic extends JPanel{
         return gridWidth;
     }
 
+    public JPanel[][] getGrid() {
+        return grid;
+    }
+
     public void setTabToShow(Case[][] tabToShow) {
         this.tabToShow = tabToShow;
         this.updateGrid();

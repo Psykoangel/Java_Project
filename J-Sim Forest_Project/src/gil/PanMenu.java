@@ -1,6 +1,7 @@
 package gil;
 
 
+import gil.action.AddMode;
 import gil.action.ButGeneration;
 import gil.action.ButQuit;
 import java.awt.Dimension;
@@ -52,7 +53,6 @@ public class PanMenu extends JMenuBar{
 
             quitItem = new JMenuItem("Quitter");
             file.add(quitItem);
-            quitItem.addActionListener(new ButQuit());
         
         
         generate = new JMenu("Simulation");
@@ -60,7 +60,6 @@ public class PanMenu extends JMenuBar{
         
             geneItem = new JMenuItem("Lancer la génération");
             generate.add(geneItem);
-            geneItem.addActionListener(new ButGeneration());
             geneItem.setEnabled(false);
 
             playItem = new JMenuItem("Lancer le pas suivant");
@@ -77,9 +76,11 @@ public class PanMenu extends JMenuBar{
         
             fireItem = new JCheckBoxMenuItem("Mode feu");
             mode.add(fireItem);
+            fireItem.setEnabled(false);
 
             infectItem = new JCheckBoxMenuItem("Mode invasion d'insects");
             mode.add(infectItem);
+            infectItem.setEnabled(false);
     }
 
     public JMenuItem getReplayItem() {

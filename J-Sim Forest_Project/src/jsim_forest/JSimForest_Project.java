@@ -20,16 +20,16 @@ public class JSimForest_Project {
         int wantedYTab = 7;
         int TimeForOneStep = 1000;
         
-        BOLObject calculate = new BOLObject();
+        BOLObject obj = new BOLObject();
         
-        GILObject window = new GILObject(calculate);
+        GILObject window = new GILObject(obj);
         
-        Step timeStep = new Step(TimeForOneStep, calculate, window);
+        Step timeStep = new Step(TimeForOneStep, obj, window);
         
         
         //================PARAMETRAGE============================================
         
-        calculate.emptyTabGen(wantedXTab, wantedYTab);
+        obj.emptyTabGen(wantedXTab, wantedYTab);
         
         //Case[][] newTab = new Case[window.getGridLength()][window.getGridWidth()];
         Case[][] newTab = new Case[wantedXTab][wantedYTab];
@@ -49,13 +49,13 @@ public class JSimForest_Project {
         System.out.print("\n");
         System.out.print("\n");
         
-        calculate.setUpdatedTab(newTab, wantedXTab, wantedYTab);
-        calculate.setFireMode(false);
-        calculate.setInvasionMode(false);
+        obj.setUpdatedTab(newTab, wantedXTab, wantedYTab);
+        obj.setFireMode(false);
+        obj.setInvasionMode(false);
 
-        timeStep.updateBOLObject(calculate);
+        timeStep.updateBOLObject(obj);
         
-        timeStep.setRemainingTime(stepNumber);
+        //timeStep.setRemainingTime(stepNumber);
         //timeStep.start();
     }
 }

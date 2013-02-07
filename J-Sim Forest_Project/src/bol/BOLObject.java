@@ -9,14 +9,19 @@ public class BOLObject {
     
     
     //Attributes
+    
+    private Step step;
+    
     private Tableau tab;
     private Tableau updatedTab;
+    
     private boolean fireMode;
     private boolean invasionMode;
         
     
     // Constructors
     public BOLObject(){
+        step = new Step();
         fireMode = false;
         invasionMode = false;
     }
@@ -63,6 +68,10 @@ public class BOLObject {
 
     public boolean isInvasionMode() {
         return invasionMode;
+    }
+
+    public Step getStep() {
+        return step;
     }
     
         

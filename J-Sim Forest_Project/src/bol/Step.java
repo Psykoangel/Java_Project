@@ -14,6 +14,7 @@ public class Step implements ActionListener{
     
     int lastUpdate;
     int remainingTime;
+    int stepSpeed;
     int stepNumber;
     int actualStepNumber;
     
@@ -60,6 +61,14 @@ public class Step implements ActionListener{
     
     public void updateBOLObject(BOLObject BOLobj){
         this.BOLObj = BOLobj;
+    }
+    
+    public void setStepParameter(int stepNumber, int stepSpeed){
+        this.remainingTime = stepNumber;
+        this.stepSpeed = stepSpeed;
+        this.actualStepNumber = 0;
+        timer = new Timer(this.stepSpeed, this);
+        timer.setInitialDelay(0);
     }
     
     

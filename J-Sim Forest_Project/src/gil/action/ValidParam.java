@@ -24,9 +24,19 @@ public class ValidParam implements ActionListener {
         int abscisse = Integer.valueOf(panelParam.getTailleX().getText());
         int ordonnee = Integer.valueOf(panelParam.getTailleY().getText());
         this.frame.setTabToShow(obj.emptyTabGen(abscisse, ordonnee).getTab(), abscisse, ordonnee);
+        
+        
+        panelParam.getTailleX().setEnabled(false);
+        panelParam.getTailleY().setEnabled(false);
+        panelParam.getTfTailleX().setEnabled(false);
+        panelParam.getTfTailleY().setEnabled(false);
+        panelParam.getButValid().setVisible(false);
+        //this.frame.getPanGraphic().repaint();
         panelParam.getTfStep().setVisible(true);
         panelParam.getTfStepNumber().setVisible(true);
-        this.frame.getPanGraphic().repaint();
+        panelParam.getSlStepSpeed().setVisible(true);
+        panelParam.getSliderNumber().setVisible(true);
+        panelParam.getButStepValid().setVisible(true);
     }
     
 }

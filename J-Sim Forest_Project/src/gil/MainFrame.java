@@ -2,7 +2,7 @@ package gil;
 
 import bol.BOLObject;
 import bol.Case;
-import gil.action.ValidParam;
+import gil.action.*;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
@@ -56,7 +56,16 @@ public class MainFrame extends JFrame {
         this.panProgBar = new PanProgBar();
         this.panText = new PanText();
         
+        //ActionListener on component Application
+        this.panMenu.getQuitItem().addActionListener(new ButQuit());
+        this.panMenu.getGeneItem().addActionListener(new ButGeneration());
+        this.panMenu.getFireItem().addActionListener(new AddMode(BOLObj, this));
+        this.panMenu.getInfectItem().addActionListener(new AddMode(BOLObj, this));
+        
         this.panPara.getButValid().addActionListener(new ValidParam(BOLObj, this));
+        this.panPara.getButStepValid().addActionListener(new ValidStepParam(BOLObj, this));
+        this.panPara.getCbFireMode().addActionListener(new AddMode(BOLObj, this));
+        this.panPara.getCbInvasionMode().addActionListener(new AddMode(BOLObj, this));
 
         this.splitBas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panText, panProgBar);
         this.splitBas.setDividerLocation(300);
@@ -109,9 +118,9 @@ public class MainFrame extends JFrame {
         this.tabToShow = tabToShow;
         this.gridLength = gridLength;
         this.gridWidth = gridWidth;
-        this.panGraphic.setTabToShow(this.tabToShow);
         this.panGraphic.setGridLength(this.gridLength);
         this.panGraphic.setGridWidth(this.gridWidth);
+        this.panGraphic.setTabToShow(this.tabToShow);        
         this.panGraphic.repaint();
     }
 }
