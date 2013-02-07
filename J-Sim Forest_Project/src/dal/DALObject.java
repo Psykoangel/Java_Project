@@ -1,5 +1,7 @@
 package dal;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -49,7 +51,7 @@ public class DALObject {
     
     //Récupération des information de la bdd pour générer le fichier .csv
     //Envoi DAL -> BOL
-    public void exportCSVBDD() throws SQLException {
+    public ArrayList<String[]> gridData() throws SQLException {
         completeLst = new ArrayList<>();
         String str = new String();
         String query = ("SELECT GRID FROM save;");
@@ -64,6 +66,25 @@ public class DALObject {
             String[] tab2 = tab1[i].split(",");
             completeLst.add(tab2);
         }
+        return completeLst;
+    }
+    
+    
+    public void createCSVBDD(String pName, String tabCSV[]) throws IOException {
+        String filename = new String();
+        String path = new String();
+        filename = pName+".csv";
+        path = "C:\\"+filename;
+        FileWriter writer = new FileWriter(path);
+        writer.append("jeune pousse;arbuste;arbre;vide");
+        for (int i = 0; i < tabCSV.length; i++)
+        {
+            writer.append(tabCSV[i]);
+            writer.append(";");
+        }
+        writer.append("\n");
+        writer.flush();
+	writer.close();
     }
     
     //Récupération des information de la bdd pour afficher les sauvegardes
@@ -83,7 +104,6 @@ public class DALObject {
     //Récupération des information de la bdd pour récupérer les données de la sauvegarde
     //Envoi DAL -> BOL
     public ArrayList selectSave(String pName) throws SQLException {
-        int test = 1;
         String query = ("SELECT TX, TY, STT, SN, GRID FROM save WHERE NAME = ?;");
         preStmt = cnx.prepareStatement(query);
         preStmt.setString(1, pName);
@@ -99,6 +119,21 @@ public class DALObject {
         }
         preStmt.close();
         return lst;
+    }
+    
+    //Ajout d'une sauvegarde dans la BDD
+    // BOL -> DAL
+    public void insertSave(String pName, int pTx, int pTy, int pStt, int pSn, String pGrid) throws SQLException {
+        String query = ("INSERT INTO save (NAME, TX, TY, STT, SN, GRID) VALUES (?, ?, ?, ?, ?, ?);");
+        preStmt = cnx.prepareStatement(query);
+        preStmt.setString(1, pName);
+        preStmt.setInt(2, pTx);
+        preStmt.setInt(3, pTy);
+        preStmt.setInt(4, pStt);
+        preStmt.setInt(5, pSn);
+        preStmt.setString(6, pGrid);
+        preStmt.execute();
+        preStmt.close();
     }
     
     //Update pour modifier ou écraser les données en BDD
@@ -123,21 +158,6 @@ public class DALObject {
         String req = ("DELETE FROM save WHERE ID = ?;");
         PreparedStatement preStmt = cnx.prepareStatement(req);
         preStmt.setInt(1, pId);
-        preStmt.execute();
-        preStmt.close();
-    }
-    
-    //Ajout d'une sauvegarde dans la BDD
-    // BOL -> DAL
-    public void insertSave(String pName, int pTx, int pTy, int pStt, int pSn, String pGrid) throws SQLException {
-        String query = ("INSERT INTO save (NAME, TX, TY, STT, SN, GRID) VALUES (?, ?, ?, ?, ?, ?);");
-        preStmt = cnx.prepareStatement(query);
-        preStmt.setString(1, pName);
-        preStmt.setInt(2, pTx);
-        preStmt.setInt(3, pTy);
-        preStmt.setInt(4, pStt);
-        preStmt.setInt(5, pSn);
-        preStmt.setString(6, pGrid);
         preStmt.execute();
         preStmt.close();
     }
