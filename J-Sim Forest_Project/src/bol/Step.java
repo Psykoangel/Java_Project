@@ -4,6 +4,8 @@ package bol;
 import gil.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import javax.swing.Timer;
 
 public class Step implements ActionListener{
@@ -21,14 +23,12 @@ public class Step implements ActionListener{
 
     // Constructors
     public Step() {
-        
         remainingTime = 100;
         timer = new Timer(3000, this);
         timer.setInitialDelay(0);
     }
     
     public Step(int msTime, BOLObject calculate) {
-        
         remainingTime = 100;
         this.actualStepNumber = 0;
         this.BOLObj = calculate;
@@ -82,25 +82,46 @@ public class Step implements ActionListener{
     }
     
     public void update(){
-        if (remainingTime != 0) {
+        if (remainingTime == 0) {
+            this.frame.getPanPara().getButPause().setVisible(false);
+            this.frame.getPanPara().getButGeneration().setVisible(true);
+            timer.stop();
+        } else {
             int now = this.actualStepNumber++;
             int elapsed = now - lastUpdate;
             remainingTime -= elapsed;
             lastUpdate = now;
-        } else {
-            this.frame.getPanPara().getButPause().setVisible(false);
-            this.frame.getPanPara().getButGeneration().setVisible(true);
-            timer.stop();
-            return;
+            
+            this.frame.setTabToShow(this.BOLObj.getUpdatedTab().getTab(), this.BOLObj.getUpdatedTab().getX(), this.BOLObj.getUpdatedTab().getY());
+            BOLObj.setTab(frame.getTabToShow(), frame.getGridWidth(), frame.getGridLength());
+            BOLObj.CheckTab();
+            this.frame.getPanGraphic().repaint();
+            this.updateBOLObject(BOLObj);
+            
+            this.frame.getPanProgBar().setProgressNumber((int)(((double)actualStepNumber * 100.0)/(stepNumber + 1)));
+            HashMap countResult = BOLObj.getCaseCounter().CountStateGridCase(BOLObj, frame);
+            
+            int nbMaxTabCase = BOLObj.getTab().getX()* BOLObj.getTab().getY();
+            DecimalFormat df = new DecimalFormat("#.###");
+            
+            this.frame.getPanText().setNbStep("Tour : " + (actualStepNumber-1) + "/" + stepNumber);
+            //this.frame.getPanText().setNbJeunePousse("JP : " + countResult.get(Etat.jeunePousse) + "/" + nbMaxTabCase);
+            this.frame.getPanText().setNbJeunePousse("JP : " + df.format((double)Integer.valueOf(countResult.get(Etat.jeunePousse).toString())/(double)nbMaxTabCase));
+            //this.frame.getPanText().setNbArbuste("Arbu. : " + (double)Integer.valueOf(countResult.get(Etat.arbuste).toString())/(double)nbMaxTabCase);
+            this.frame.getPanText().setNbArbuste("Arbu. : " + df.format((double)Integer.valueOf(countResult.get(Etat.arbuste).toString())/(double)nbMaxTabCase));
+            //this.frame.getPanText().setNbArbre("Arbre : " + (double)Integer.valueOf(countResult.get(Etat.arbre).toString())/(double)nbMaxTabCase);
+            this.frame.getPanText().setNbArbre("Arbre : " + df.format((double)Integer.valueOf(countResult.get(Etat.arbre).toString())/(double)nbMaxTabCase));
+            if (this.frame.getPanText().getNbFeu().isEnabled()) {
+                //this.frame.getPanText().setNbFeu("Feu : " + (double)Integer.valueOf(countResult.get(Etat.feu).toString())/(double)nbMaxTabCase);
+                this.frame.getPanText().setNbFeu("Feu : " + df.format((double)Integer.valueOf(countResult.get(Etat.feu).toString())/(double)nbMaxTabCase));
+            }
+            if (this.frame.getPanText().getNbInfecte().isEnabled()) {
+                //this.frame.getPanText().setNbInfecte("Inf. : " + (double)Integer.valueOf(countResult.get(Etat.infecte).toString())/(double)nbMaxTabCase);
+                this.frame.getPanText().setNbInfecte("Inf. : " + df.format((double)Integer.valueOf(countResult.get(Etat.infecte).toString())/(double)nbMaxTabCase));
+            }
+            
+            this.frame.getPanText().repaint();
         }
-        //System.out.println(this.actualStepNumber);
-        //System.out.println(this.remainingTime);
-        
-        this.frame.setTabToShow(this.BOLObj.getUpdatedTab().getTab(), this.BOLObj.getUpdatedTab().getX(), this.BOLObj.getUpdatedTab().getY());
-        BOLObj.setTab(frame.getTabToShow(), frame.getGridWidth(), frame.getGridLength());
-        BOLObj.CheckTab();
-        this.frame.getPanGraphic().repaint();
-        this.updateBOLObject(BOLObj);
     }
     
     void resume(){

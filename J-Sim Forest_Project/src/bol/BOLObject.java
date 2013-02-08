@@ -19,10 +19,12 @@ public class BOLObject {
     
     private boolean fireMode;
     private boolean invasionMode;
-        
+    
+    private CaseCounter caseCounter;    
     
     // Constructors
     public BOLObject(){
+        caseCounter = new CaseCounter();
         step = new Step();
         fireMode = false;
         invasionMode = false;
@@ -78,6 +80,10 @@ public class BOLObject {
 
     public Step getStep() {
         return step;
+    }
+
+    public CaseCounter getCaseCounter() {
+        return caseCounter;
     }
     
         

@@ -64,7 +64,7 @@ public class MainFrame extends JFrame {
         this.panPara.getButNext().addActionListener(new ButNextStep(BOLObj, this));
 
         this.splitBas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panText, panProgBar);
-        this.splitBas.setDividerLocation(300);
+        this.splitBas.setDividerLocation(550);
 
         this.setJMenuBar(panMenu);
         this.getContentPane().add(panGraphic, BorderLayout.CENTER);
