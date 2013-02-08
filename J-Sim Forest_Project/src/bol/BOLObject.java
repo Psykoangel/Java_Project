@@ -15,7 +15,7 @@ public class BOLObject {
     private Tableau tab;
     private Tableau updatedTab;
     
-    ArrayList<String[]> ExportCsvTab;
+    ArrayList<String[]> CountStateGridCase;
     
     private boolean fireMode;
     private boolean invasionMode;

@@ -136,8 +136,8 @@ public class DALObject {
     
     //Update pour modifier ou écraser les données en BDD
     //BOL -> DAL
-    public void updateSave(String pName, int pTx, int pTy, int pStt, int pSn, String pGrid, int pId) throws SQLException {
-        String req = ("UPDATE save SET NAME = ?, TX = ?, TY = ?, STT = ?, SN = ?, GRID = ? WHERE ID = ?;");
+    public void updateSave(String pName, int pTx, int pTy, int pStt, int pSn, String pGrid) throws SQLException {
+        String req = ("UPDATE save SET NAME = ?, TX = ?, TY = ?, STT = ?, SN = ?, GRID = ? WHERE NAME = ?;");
         PreparedStatement preStmt = cnx.prepareStatement(req);
         preStmt.setString(1, pName);
         preStmt.setInt(2, pTx);
@@ -145,17 +145,17 @@ public class DALObject {
         preStmt.setInt(4, pStt);
         preStmt.setInt(5, pSn);
         preStmt.setString(6, pGrid);
-        preStmt.setInt(7, pId);
+        preStmt.setString(7, pName);
         preStmt.execute();
         preStmt.close();
     }
     
     //Suppresion d'une sauvegarde
     //BOL -> DAL
-    public void deleteSave(int pId) throws SQLException {
-        String req = ("DELETE FROM save WHERE ID = ?;");
+    public void deleteSave(String pName) throws SQLException {
+        String req = ("DELETE FROM save WHERE NAME = ?;");
         PreparedStatement preStmt = cnx.prepareStatement(req);
-        preStmt.setInt(1, pId);
+        preStmt.setString(1, pName);
         preStmt.execute();
         preStmt.close();
     }
