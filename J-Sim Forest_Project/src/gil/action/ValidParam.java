@@ -45,6 +45,9 @@ public class ValidParam implements ActionListener {
         panelParam.getSlStepSpeed().setVisible(true);
         panelParam.getSliderNumber().setVisible(true);
         panelParam.getButStepValid().setVisible(true);
+        
+        frame.getPanMenu().getExportItem().setEnabled(true);
+        frame.getPanMenu().getCsvItem().setEnabled(true);
     }
     
 }

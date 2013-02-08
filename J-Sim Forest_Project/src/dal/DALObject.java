@@ -2,11 +2,7 @@ package dal;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class DALObject {
@@ -70,19 +66,21 @@ public class DALObject {
     }
     
     
-    public void createCSVBDD(String pName, String tabCSV[]) throws IOException {
+    public void createCSVExport(String pName, String tabCSV[][]) throws IOException {
         String filename = new String();
         String path = new String();
         filename = pName+".csv";
-        path = "C:\\"+filename;
+        path = "C:\\J-SimForest\\CSVSave"+filename;
         FileWriter writer = new FileWriter(path);
         writer.append("jeune pousse;arbuste;arbre;vide");
-        for (int i = 0; i < tabCSV.length; i++)
-        {
-            writer.append(tabCSV[i]);
-            writer.append(";");
+        for (int j = 0; j < tabCSV[0].length; j++) {
+            for (int i = 0; i < tabCSV.length; i++)
+            {
+                writer.append(tabCSV[i][j]);
+                writer.append(";");
+            }
+            writer.append("\n");
         }
-        writer.append("\n");
         writer.flush();
 	writer.close();
     }
@@ -160,5 +158,12 @@ public class DALObject {
         preStmt.setInt(1, pId);
         preStmt.execute();
         preStmt.close();
+    }
+    
+    public void closeConnection() {
+        try {
+            this.cnx.close();
+        } catch (SQLException e) {
+        }
     }
 }

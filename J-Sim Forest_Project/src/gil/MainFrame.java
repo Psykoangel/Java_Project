@@ -4,6 +4,8 @@ import bol.BOLObject;
 import bol.Case;
 import gil.action.*;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
@@ -36,10 +38,22 @@ public class MainFrame extends JFrame {
         this.panText = new PanText();
         
         //ActionListener on component Application
+        //this.panMenu.getReplayItem().addActionListener(null);
         this.panMenu.getQuitItem().addActionListener(new ButQuit());
         this.panMenu.getGeneItem().addActionListener(new ButGeneration(BOLObj, this));
         this.panMenu.getFireItem().addActionListener(new AddMode(BOLObj, this));
         this.panMenu.getInfectItem().addActionListener(new AddMode(BOLObj, this));
+        this.getPanMenu().getReplayItem().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                GILObject GILObject = new GILObject(new BOLObject());
+                dispose();
+            }
+        });
+        this.panMenu.getCsvItem().addActionListener(null);
+        this.panMenu.getExportItem().addActionListener(new ExportToDataBase(BOLObj, this));
         
         this.panPara.getButValid().addActionListener(new ValidParam(BOLObj, this));
         this.panPara.getButStepValid().addActionListener(new ValidStepParam(BOLObj, this));

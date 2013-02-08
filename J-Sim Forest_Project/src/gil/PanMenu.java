@@ -1,9 +1,6 @@
 package gil;
 
 
-import gil.action.AddMode;
-import gil.action.ButGeneration;
-import gil.action.ButQuit;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -47,9 +44,11 @@ public class PanMenu extends JMenuBar{
 
             exportItem = new JMenuItem("Export de la simulation");
             file.add(exportItem);
+            exportItem.setEnabled(false);
 
             csvItem = new JMenuItem("Export de la simulation au format CSV");
             file.add(csvItem);
+            csvItem.setEnabled(false);
 
             quitItem = new JMenuItem("Quitter");
             file.add(quitItem);

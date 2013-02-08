@@ -45,6 +45,10 @@ public class Step implements ActionListener{
         return remainingTime;
     }
 
+    public int getStepNumber() {
+        return stepNumber;
+    }
+
     // Setter
     public void setActualStepNumber(int actualStepNumber) {
         this.actualStepNumber = actualStepNumber;
@@ -59,7 +63,7 @@ public class Step implements ActionListener{
     }
     
     public void setStepParameter(int stepNumber, int stepSpeed){
-        this.remainingTime = stepNumber;
+        this.remainingTime = this.stepNumber = stepNumber;
         this.stepSpeed = stepSpeed;
         this.actualStepNumber = 0;
         timer = new Timer(this.stepSpeed, this);

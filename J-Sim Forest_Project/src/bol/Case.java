@@ -36,16 +36,25 @@ public class Case {
     @Override
     public String toString() {
         if (etat == Etat.vide) {
-            return " 0 ";
+            return "0";
         }
         if (etat == Etat.jeunePousse) {
-            return " 1 ";
+            return "1";
         }
         if (etat == Etat.arbuste) {
-            return " 2 ";
+            return "2";
         }
         if (etat == Etat.arbre) {
-            return " 3 ";
+            return "3";
+        }
+        if (etat == Etat.feu) {
+            return "4";
+        }
+        if (etat == Etat.cendre) {
+            return "5";
+        }
+        if (etat == Etat.infecte) {
+            return "6";
         }
         return " E ";
     }
