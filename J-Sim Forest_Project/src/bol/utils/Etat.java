@@ -1,5 +1,5 @@
 
-package bol;
+package bol.utils;
 
 public enum Etat {
     vide(0),

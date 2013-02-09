@@ -1,6 +1,10 @@
 
 package bol;
 
+import bol.utils.Neighborhood;
+import bol.utils.Etat;
+import bol.utils.Tableau;
+import bol.utils.Case;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;

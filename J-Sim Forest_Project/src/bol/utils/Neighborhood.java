@@ -1,5 +1,5 @@
 
-package bol;
+package bol.utils;
 
 public enum Neighborhood {
     Moore(0),

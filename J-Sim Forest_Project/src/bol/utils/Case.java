@@ -1,5 +1,5 @@
 
-package bol;
+package bol.utils;
 
 public class Case {
     private Etat etat;

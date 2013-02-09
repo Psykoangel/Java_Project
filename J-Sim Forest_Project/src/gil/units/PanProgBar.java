@@ -1,4 +1,4 @@
-package gil;
+package gil.units;
 
 import java.awt.Dimension;
 import javax.swing.JPanel;

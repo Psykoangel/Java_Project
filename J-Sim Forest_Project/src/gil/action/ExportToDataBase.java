@@ -2,9 +2,9 @@
 package gil.action;
 
 import bol.BOLObject;
-import bol.Case;
+import bol.utils.Case;
 import dal.DALObject;
-import gil.DialogBox;
+import gil.utils.DialogBox;
 import gil.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

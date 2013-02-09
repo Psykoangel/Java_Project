@@ -1,5 +1,5 @@
 
-package bol;
+package bol.utils;
 
 public class Tableau {
     private Case tab[][];

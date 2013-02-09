@@ -1,4 +1,4 @@
-package gil;
+package gil.units;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

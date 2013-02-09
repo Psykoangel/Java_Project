@@ -1,7 +1,12 @@
 package gil;
 
+import gil.units.PanMenu;
+import gil.units.PanProgBar;
+import gil.units.PanGraphic;
+import gil.units.PanPara;
+import gil.units.PanText;
 import bol.BOLObject;
-import bol.Case;
+import bol.utils.Case;
 import gil.action.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

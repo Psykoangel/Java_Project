@@ -1,6 +1,7 @@
 
 package bol;
 
+import bol.utils.Etat;
 import gil.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

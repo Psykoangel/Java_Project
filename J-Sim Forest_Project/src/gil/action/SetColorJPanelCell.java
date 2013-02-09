@@ -2,8 +2,8 @@
 package gil.action;
 
 import bol.BOLObject;
-import bol.Etat;
-import gil.GridCase;
+import bol.utils.Etat;
+import gil.utils.GridCase;
 import gil.MainFrame;
 import java.awt.Color;
 import java.awt.event.MouseEvent;

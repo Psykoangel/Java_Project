@@ -1,5 +1,5 @@
 
-package gil;
+package gil.utils;
 
 import java.awt.LayoutManager;
 import javax.swing.JPanel;

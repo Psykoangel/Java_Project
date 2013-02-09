@@ -1,5 +1,5 @@
 
-package gil;
+package gil.utils;
 
 import javax.swing.*;
 import java.awt.*;

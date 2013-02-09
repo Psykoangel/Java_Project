@@ -1,7 +1,8 @@
-package gil;
+package gil.units;
 
-import bol.Case;
-import bol.Etat;
+import gil.utils.GridCase;
+import bol.utils.Case;
+import bol.utils.Etat;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;

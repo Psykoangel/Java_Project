@@ -1,5 +1,6 @@
-package gil;
+package gil.units;
 
+import gil.MainFrame;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

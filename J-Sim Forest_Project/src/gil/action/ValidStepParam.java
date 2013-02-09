@@ -3,7 +3,7 @@ package gil.action;
 
 import bol.BOLObject;
 import gil.MainFrame;
-import gil.PanPara;
+import gil.units.PanPara;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
