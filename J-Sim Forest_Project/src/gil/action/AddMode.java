@@ -30,6 +30,14 @@ public class AddMode implements ActionListener {
                 frame.getPanPara().getFeuCaserButton().setEnabled(true);
                 frame.getPanPara().getCendreCaserButton().setEnabled(true);
                 
+                frame.getPanText().getNbFeu().setVisible(true);
+                frame.getPanText().getNbInfecte().setVisible(false);
+                
+                this.obj.setInvasionMode(false);
+                frame.getPanMenu().getInfectItem().setSelected(false);
+                frame.getPanPara().getCbInvasionMode().setSelected(false);
+                frame.getPanPara().getInsecteCaserButton().setEnabled(false);
+                
             } else {
                 this.obj.setFireMode(false);
                 frame.getPanMenu().getFireItem().setSelected(false);
@@ -44,6 +52,15 @@ public class AddMode implements ActionListener {
                 this.obj.setInvasionMode(true);
                 frame.getPanMenu().getInfectItem().setSelected(true);
                 frame.getPanPara().getInsecteCaserButton().setEnabled(true);
+                
+                frame.getPanText().getNbFeu().setVisible(false);
+                frame.getPanText().getNbInfecte().setVisible(true);
+                
+                this.obj.setFireMode(false);
+                frame.getPanMenu().getFireItem().setSelected(false);
+                frame.getPanPara().getCbFireMode().setSelected(false);
+                frame.getPanPara().getFeuCaserButton().setEnabled(false);
+                frame.getPanPara().getCendreCaserButton().setEnabled(false);
             } else {
                 this.obj.setInvasionMode(false);
                 frame.getPanMenu().getInfectItem().setSelected(false);
@@ -58,6 +75,14 @@ public class AddMode implements ActionListener {
                 frame.getPanPara().getCbFireMode().setSelected(true);
                 frame.getPanPara().getFeuCaserButton().setEnabled(true);
                 frame.getPanPara().getCendreCaserButton().setEnabled(true);
+                
+                frame.getPanText().getNbFeu().setVisible(true);
+                frame.getPanText().getNbInfecte().setVisible(false);
+                
+                this.obj.setInvasionMode(false);
+                frame.getPanMenu().getInfectItem().setSelected(false);
+                frame.getPanPara().getCbInvasionMode().setSelected(false);
+                frame.getPanPara().getInsecteCaserButton().setEnabled(false);
             } else {
                 this.obj.setFireMode(false);
                 frame.getPanPara().getCbFireMode().setSelected(false);
@@ -72,6 +97,15 @@ public class AddMode implements ActionListener {
                 this.obj.setInvasionMode(true);
                 frame.getPanPara().getCbInvasionMode().setSelected(true);
                 frame.getPanPara().getInsecteCaserButton().setEnabled(true);
+                this.obj.setFireMode(false);
+                
+                frame.getPanText().getNbFeu().setVisible(false);
+                frame.getPanText().getNbInfecte().setVisible(true);
+                
+                frame.getPanMenu().getFireItem().setSelected(false);
+                frame.getPanPara().getCbFireMode().setSelected(false);
+                frame.getPanPara().getFeuCaserButton().setEnabled(false);
+                frame.getPanPara().getCendreCaserButton().setEnabled(false);
             } else {
                 this.obj.setInvasionMode(false);
                 frame.getPanPara().getCbInvasionMode().setSelected(false);

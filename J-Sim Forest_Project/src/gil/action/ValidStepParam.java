@@ -48,6 +48,8 @@ public class ValidStepParam implements ActionListener {
         panelParam.getButNext().setEnabled(true);
         
         frame.getPanMenu().getGeneItem().setEnabled(true);
+        frame.getPanMenu().getPlayItem().setEnabled(true);
+        frame.getPanMenu().getPauseItem().setEnabled(true);
         frame.getPanMenu().getFireItem().setEnabled(true);
         frame.getPanMenu().getInfectItem().setEnabled(true);
     }

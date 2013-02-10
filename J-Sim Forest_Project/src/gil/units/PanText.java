@@ -37,10 +37,12 @@ public class PanText extends JPanel {
         nbFeu.setOpaque(true);
         nbFeu.setBackground(new Color(231, 31, 27, 90));
         nbFeu.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black), BorderFactory.createEmptyBorder(10,10,10,10)));
+        nbFeu.setVisible(false);
         nbInfecte = new JLabel(" Infecté ");
         nbInfecte.setOpaque(true);
         nbInfecte.setBackground(new Color(109, 58, 150, 90));
         nbInfecte.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black), BorderFactory.createEmptyBorder(10,10,10,10)));
+        nbInfecte.setVisible(false);
         label.add(nbStep);
         label.add(nbJeunePousse);
         label.add(nbArbuste);

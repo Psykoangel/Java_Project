@@ -18,10 +18,10 @@ public class ButGeneration implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (obj.getStep().getActualStepNumber() != 0) {
-            obj.getStep().setRemainingTime(obj.getStep().getRemainingTime() - 1);
-        }
         if (obj.getStep().getRemainingTime() != 0) {
+            if (obj.getStep().getActualStepNumber() != 0) {
+                obj.getStep().setRemainingTime(obj.getStep().getRemainingTime() - 1);
+            }
             frame.getPanPara().getButGeneration().setVisible(false);
             this.obj.getStep().start(obj, frame);
             frame.getPanPara().getButPause().setVisible(true);

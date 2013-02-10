@@ -4,8 +4,8 @@ package gil.action;
 import bol.BOLObject;
 import bol.utils.Case;
 import dal.DALObject;
-import gil.utils.DialogBox;
 import gil.MainFrame;
+import gil.utils.DialogBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -51,6 +51,9 @@ public class ExportToDataBase implements ActionListener {
             Logger.getLogger(ExportToDataBase.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(frame, "Une erreur est survenue lors de l'enregistrement !\nRéesssayez plus tard",
                                                 "Erreur d'enregistrement", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            DBAccess.closeConnection();
         }
+        DBAccess.closeConnection();
     }
 }

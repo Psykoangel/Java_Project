@@ -1,9 +1,11 @@
 package dal;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class DALObject {
     private String url;
@@ -66,21 +68,45 @@ public class DALObject {
     }
     
     
-    public void createCSVExport(String pName, String tabCSV[][]) throws IOException {
+    public void createCSVExport(String pName, ArrayList<String[]> tabCSV) throws IOException {
         String filename = new String();
         String path = new String();
         filename = pName+".csv";
-        path = "C:\\J-SimForest\\CSVSave"+filename;
-        FileWriter writer = new FileWriter(path);
-        writer.append("jeune pousse;arbuste;arbre;vide");
-        for (int j = 0; j < tabCSV[0].length; j++) {
-            for (int i = 0; i < tabCSV.length; i++)
-            {
-                writer.append(tabCSV[i][j]);
-                writer.append(";");
+        FileWriter writer;
+        String targetDirectory = "C:\\J-SimForest\\CSVSave\\";
+        path = targetDirectory + filename;
+        File df = new File(targetDirectory);
+        File newFile = new File(path);
+        
+        if (df.exists()) {
+            newFile.createNewFile();
+            writer = new FileWriter(path, true);
+            writer.append("jeune pousse;arbuste;arbre;vide\n");
+            for (int j = 0; j < tabCSV.size(); j++) {
+                for (int i = 0; i < tabCSV.get(j).length; i++)
+                {
+                    writer.append(tabCSV.get(j)[i]);
+                    writer.append(";");
+                }
+                writer.append("\n");
             }
-            writer.append("\n");
+        } else if (df.mkdirs()) {
+            newFile.createNewFile();
+            writer = new FileWriter(path, true);
+            writer.append("jeune pousse;arbuste;arbre;vide");
+            for (int j = 0; j < tabCSV.size(); j++) {
+                for (int i = 0; i < tabCSV.get(j).length; i++)
+                {
+                    writer.append(tabCSV.get(j)[i]);
+                    writer.append(";");
+                }
+                writer.append("\n");
+            }
+        } else {
+            System.out.println("pas bon !!");
+            throw new IOException("Le dossier n'a pas pu être créé !");
         }
+        
         writer.flush();
 	writer.close();
     }

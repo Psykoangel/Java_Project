@@ -1,10 +1,10 @@
 
 package bol;
 
-import bol.utils.Neighborhood;
-import bol.utils.Etat;
-import bol.utils.Tableau;
 import bol.utils.Case;
+import bol.utils.Etat;
+import bol.utils.Neighborhood;
+import bol.utils.Tableau;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,6 +29,7 @@ public class BOLObject {
     // Constructors
     public BOLObject(){
         caseCounter = new CaseCounter();
+        CountStateGridCase = new ArrayList<>();
         step = new Step();
         fireMode = false;
         invasionMode = false;
@@ -62,6 +63,10 @@ public class BOLObject {
     public void setInvasionMode(boolean invasionMode) {
         this.invasionMode = invasionMode;
         //System.out.println("invasionMode updated !");
+    }
+
+    public void setCountStateGridCase(ArrayList<String[]> CountStateGridCase) {
+        this.CountStateGridCase = CountStateGridCase;
     }
     
     
@@ -103,6 +108,10 @@ public class BOLObject {
         //System.out.println("Empty Tables created !");
         return tab;
     }
+
+    public ArrayList<String[]> getCountStateGridCase() {
+        return CountStateGridCase;
+    }
     
     //Methods
     public void CheckTab(){
@@ -118,24 +127,14 @@ public class BOLObject {
                     al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
                     countList = VecinityStateCount(al);
                     
-                if (fireMode || invasionMode) {
-                    if (invasionMode) {
-                        al = getVecinity(Neighborhood.VonNeumann, length, width, tab.getX(), tab.getY());
-                        countList = VecinityStateCount(al);
-                        
-                        if (fireMode && Integer.valueOf(countList.get(Etat.infecte).toString()) >= 1) {
-                            ArrayList alTemp = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
-                            HashMap countListTemp = VecinityStateCount(al);
-                            
-                            if (Integer.valueOf(countList.get(Etat.feu).toString()) >= 1) {
-                                al = alTemp;
-                                countList = countListTemp;
-                            }
-                        }
-                    } else {
-                        al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
-                        countList = VecinityStateCount(al);
-                    }
+                if (invasionMode) {
+                    al = getVecinity(Neighborhood.VonNeumann, length, width, tab.getX(), tab.getY());
+                    countList = VecinityStateCount(al);
+                }
+                    
+                if (fireMode) {
+                    al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
+                    countList = VecinityStateCount(al);
                 }
                 
                 UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
@@ -275,7 +274,7 @@ public class BOLObject {
                             cc.setEtat(Etat.feu);
                         }
                     } else {
-                        if (Infected(c.getEtat())) {
+                        if (Infected(c.getEtat()) && invasionMode) {
                             cc.setEtat(Etat.infecte);
                         }
                     }
@@ -286,7 +285,7 @@ public class BOLObject {
                             cc.setEtat(Etat.feu);
                         }
                     } else {
-                        if (Infected(c.getEtat())) {
+                        if (Infected(c.getEtat()) && invasionMode) {
                             cc.setEtat(Etat.infecte);
                         }
                     }
@@ -297,7 +296,7 @@ public class BOLObject {
                             cc.setEtat(Etat.feu);
                         }
                     } else {
-                        if (Infected(c.getEtat())) {
+                        if (Infected(c.getEtat()) && invasionMode) {
                             cc.setEtat(Etat.infecte);
                         }
                     }

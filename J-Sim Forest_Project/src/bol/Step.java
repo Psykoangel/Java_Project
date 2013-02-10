@@ -86,6 +86,28 @@ public class Step implements ActionListener{
         if (remainingTime == 0) {
             this.frame.getPanPara().getButPause().setVisible(false);
             this.frame.getPanPara().getButGeneration().setVisible(true);
+            this.frame.getPanPara().getTfStep().setEnabled(true);
+            this.frame.getPanPara().getTfStepNumber().setEnabled(true);
+            this.frame.getPanPara().getSlStepSpeed().setEnabled(true);
+            this.frame.getPanPara().getSliderNumber().setEnabled(true);
+            this.frame.getPanPara().getButStepValid().setEnabled(true);
+            
+            this.frame.getPanPara().getCbFireMode().setVisible(false);
+            this.frame.getPanPara().getCbInvasionMode().setVisible(false);
+            
+            this.frame.getPanMenu().getInfectItem().setEnabled(false);
+            this.frame.getPanMenu().getFireItem().setEnabled(false);
+            
+            this.frame.getPanPara().getRadioPanel().setVisible(false);
+            this.frame.getPanPara().getButGeneration().setEnabled(false);
+            this.frame.getPanPara().getButNext().setEnabled(false);
+            this.frame.getPanProgBar().setProgressNumber(0);
+
+            this.frame.getPanMenu().getGeneItem().setEnabled(false);
+            this.frame.getPanMenu().getPlayItem().setEnabled(false);
+            this.frame.getPanMenu().getPauseItem().setEnabled(false);
+            remainingTime = 100;
+            this.actualStepNumber = 0;
             timer.stop();
         } else {
             int now = this.actualStepNumber++;
@@ -106,20 +128,21 @@ public class Step implements ActionListener{
             DecimalFormat df = new DecimalFormat("#.###");
             
             this.frame.getPanText().setNbStep("Tour : " + (actualStepNumber-1) + "/" + stepNumber);
-            //this.frame.getPanText().setNbJeunePousse("JP : " + countResult.get(Etat.jeunePousse) + "/" + nbMaxTabCase);
-            this.frame.getPanText().setNbJeunePousse("JP : " + df.format((double)Integer.valueOf(countResult.get(Etat.jeunePousse).toString())/(double)nbMaxTabCase));
-            //this.frame.getPanText().setNbArbuste("Arbu. : " + (double)Integer.valueOf(countResult.get(Etat.arbuste).toString())/(double)nbMaxTabCase);
-            this.frame.getPanText().setNbArbuste("Arbu. : " + df.format((double)Integer.valueOf(countResult.get(Etat.arbuste).toString())/(double)nbMaxTabCase));
-            //this.frame.getPanText().setNbArbre("Arbre : " + (double)Integer.valueOf(countResult.get(Etat.arbre).toString())/(double)nbMaxTabCase);
-            this.frame.getPanText().setNbArbre("Arbre : " + df.format((double)Integer.valueOf(countResult.get(Etat.arbre).toString())/(double)nbMaxTabCase));
+            String a = df.format((double)Integer.valueOf(countResult.get(Etat.jeunePousse).toString())/(double)nbMaxTabCase);
+            this.frame.getPanText().setNbJeunePousse("JP : " + a);
+            String b = df.format((double)Integer.valueOf(countResult.get(Etat.arbuste).toString())/(double)nbMaxTabCase);
+            this.frame.getPanText().setNbArbuste("Arbu. : " + b);
+            String c = df.format((double)Integer.valueOf(countResult.get(Etat.arbre).toString())/(double)nbMaxTabCase);
+            this.frame.getPanText().setNbArbre("Arbre : " + c);
             if (this.frame.getPanText().getNbFeu().isEnabled()) {
-                //this.frame.getPanText().setNbFeu("Feu : " + (double)Integer.valueOf(countResult.get(Etat.feu).toString())/(double)nbMaxTabCase);
                 this.frame.getPanText().setNbFeu("Feu : " + df.format((double)Integer.valueOf(countResult.get(Etat.feu).toString())/(double)nbMaxTabCase));
             }
             if (this.frame.getPanText().getNbInfecte().isEnabled()) {
-                //this.frame.getPanText().setNbInfecte("Inf. : " + (double)Integer.valueOf(countResult.get(Etat.infecte).toString())/(double)nbMaxTabCase);
                 this.frame.getPanText().setNbInfecte("Inf. : " + df.format((double)Integer.valueOf(countResult.get(Etat.infecte).toString())/(double)nbMaxTabCase));
             }
+            
+            String[] csvSave = {a, b, c, df.format((double)Integer.valueOf(countResult.get(Etat.vide).toString())/(double)nbMaxTabCase)};
+            this.BOLObj.getCountStateGridCase().add(csvSave);
             
             this.frame.getPanText().repaint();
         }

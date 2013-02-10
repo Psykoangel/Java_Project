@@ -2,8 +2,7 @@ package gil.units;
 
 
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -29,8 +28,7 @@ public class PanMenu extends JMenuBar{
     public PanMenu() {
         this.setPreferredSize(new Dimension(30, 30));
         
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
         
         file = new JMenu("Fichiers");
         this.add(file);
@@ -42,7 +40,7 @@ public class PanMenu extends JMenuBar{
             importItem = new JMenuItem("Importer depuis la base de données");
             file.add(importItem);
 
-            exportItem = new JMenuItem("Export de la simulation");
+            exportItem = new JMenuItem("Export de la simulation en base de données");
             file.add(exportItem);
             exportItem.setEnabled(false);
 

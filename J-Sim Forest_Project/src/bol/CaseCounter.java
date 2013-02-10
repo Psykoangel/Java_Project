@@ -29,6 +29,7 @@ public class CaseCounter {
         this.obj = obj;
         this.frame = frame;
         int temp;
+        caseCount.put(Etat.vide, 0);
         caseCount.put(Etat.jeunePousse, 0);
         caseCount.put(Etat.arbuste, 0);
         caseCount.put(Etat.arbre, 0);
@@ -37,6 +38,11 @@ public class CaseCounter {
         for (int j = 0; j < obj.getTab().getY(); j++) {
             for (int i = 0; i < obj.getTab().getX(); i++) {
                 switch(obj.getTab().getTab()[i][j].getEtat()){
+                    case vide:
+                        temp = Integer.valueOf(caseCount.get(Etat.vide).toString());
+                        temp++;
+                        caseCount.put(Etat.vide, temp);
+                        break;
                     case jeunePousse:
                         temp = Integer.valueOf(caseCount.get(Etat.jeunePousse).toString());
                         temp++;

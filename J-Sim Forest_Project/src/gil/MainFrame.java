@@ -45,6 +45,7 @@ public class MainFrame extends JFrame {
         //ActionListener on component Application
         //this.panMenu.getReplayItem().addActionListener(null);
         this.panMenu.getQuitItem().addActionListener(new ButQuit());
+        this.panMenu.getImportItem().addActionListener(null);//<-- IMPORT
         this.panMenu.getGeneItem().addActionListener(new ButGeneration(BOLObj, this));
         this.panMenu.getFireItem().addActionListener(new AddMode(BOLObj, this));
         this.panMenu.getInfectItem().addActionListener(new AddMode(BOLObj, this));
@@ -57,8 +58,11 @@ public class MainFrame extends JFrame {
                 dispose();
             }
         });
-        this.panMenu.getCsvItem().addActionListener(null);
+        this.panMenu.getCsvItem().addActionListener(new ExportCsv(BOLObj, this));
         this.panMenu.getExportItem().addActionListener(new ExportToDataBase(BOLObj, this));
+        this.panMenu.getGeneItem().addActionListener(new ButGeneration(BOLObj, this));
+        this.panMenu.getPlayItem().addActionListener(new ButNextStep(BOLObj, this));
+        this.panMenu.getPauseItem().addActionListener(new ButPause(BOLObj, this));
         
         this.panPara.getButValid().addActionListener(new ValidParam(BOLObj, this));
         this.panPara.getButStepValid().addActionListener(new ValidStepParam(BOLObj, this));
