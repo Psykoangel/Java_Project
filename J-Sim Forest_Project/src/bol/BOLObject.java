@@ -136,13 +136,7 @@ public class BOLObject {
                     al = getVecinity(Neighborhood.Moore, length, width, tab.getX(), tab.getY());
                     countList = VecinityStateCount(al);
                 }
-                
-                if (invasionMode) {
-                    
-                } else {
-                    UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
-                }
-                
+                UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
             }
         }
     }
@@ -300,7 +294,6 @@ public class BOLObject {
                     cc.setEtat(Etat.vide);
                 break;
             }
-            
         } else if(invasionMode){
             switch(c.getEtat()){
                 case jeunePousse:
@@ -345,6 +338,15 @@ public class BOLObject {
                         cc.setElapsedTime(c.getElapsedTime() + 1);
                     }
                 break;
+                case feu:
+                    cc.setEtat(Etat.vide);
+                    break;
+                case cendre:
+                    cc.setEtat(Etat.vide);
+                    break;
+                case infecte:
+                    cc.setEtat(Etat.vide);
+                    break;
             }
         }
         

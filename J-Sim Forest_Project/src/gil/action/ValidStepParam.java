@@ -33,7 +33,9 @@ public class ValidStepParam implements ActionListener {
         panelParam.getTfStepNumber().setEnabled(false);
         panelParam.getSlStepSpeed().setEnabled(false);
         panelParam.getSliderNumber().setEnabled(false);
-        //panelParam.getButStepValid().setVisible(false);
+        if (obj.getUpdatedTab().getX() < 50 && obj.getUpdatedTab().getY() < 50) {
+            panelParam.getButStepValid().setVisible(false);
+        }
         
         for (int j = 0; j < frame.getPanGraphic().getGridWidth(); j++) {
             for (int i = 0; i < frame.getPanGraphic().getGridLength(); i++) {

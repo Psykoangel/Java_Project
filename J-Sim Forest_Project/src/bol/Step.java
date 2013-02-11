@@ -90,6 +90,7 @@ public class Step implements ActionListener{
             this.frame.getPanPara().getTfStepNumber().setEnabled(true);
             this.frame.getPanPara().getSlStepSpeed().setEnabled(true);
             this.frame.getPanPara().getSliderNumber().setEnabled(true);
+            this.frame.getPanPara().getButStepValid().setVisible(true);
             this.frame.getPanPara().getButStepValid().setEnabled(true);
             
             this.frame.getPanPara().getCbFireMode().setVisible(false);
