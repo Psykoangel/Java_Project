@@ -9,9 +9,9 @@ public class PanProgBar extends JPanel {
     private JProgressBar progressBar;
 
     public PanProgBar() {
-        this.setPreferredSize(new Dimension(100, 40));
+        this.setPreferredSize(new Dimension(200, 40));
         progressBar = new JProgressBar(0, 100);
-        progressBar.setPreferredSize(new Dimension(240, 40));
+        progressBar.setPreferredSize(new Dimension(400, 40));
         progressBar.setStringPainted(true);
         this.add(progressBar);
     }

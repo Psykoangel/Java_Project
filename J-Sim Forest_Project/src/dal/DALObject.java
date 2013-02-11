@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class DALObject {
     private String url;
@@ -139,7 +138,6 @@ public class DALObject {
             lst.add(result.getInt("STT"));
             lst.add(result.getInt("SN"));
             lst.add(result.getString("GRID"));
-            System.out.println(lst);
         }
         preStmt.close();
         return lst;

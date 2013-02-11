@@ -24,13 +24,13 @@ public class Step implements ActionListener{
 
     // Constructors
     public Step() {
-        remainingTime = 100;
+        remainingTime = 0;
         timer = new Timer(3000, this);
         timer.setInitialDelay(0);
     }
     
     public Step(int msTime, BOLObject calculate) {
-        remainingTime = 100;
+        remainingTime = 0;
         this.actualStepNumber = 0;
         this.BOLObj = calculate;
         timer = new Timer(msTime, this);
@@ -99,52 +99,59 @@ public class Step implements ActionListener{
             this.frame.getPanMenu().getFireItem().setEnabled(false);
             
             this.frame.getPanPara().getRadioPanel().setVisible(false);
-            this.frame.getPanPara().getButGeneration().setEnabled(false);
-            this.frame.getPanPara().getButNext().setEnabled(false);
+            if (!(BOLObj.getTab().getX() > 49 && BOLObj.getTab().getY() > 49)) {
+                this.frame.getPanPara().getButGeneration().setEnabled(false);
+            }
+            if (!(BOLObj.getTab().getX() > 49 && BOLObj.getTab().getY() > 49)) {
+                this.frame.getPanPara().getButNext().setEnabled(false);
+            }
             this.frame.getPanProgBar().setProgressNumber(0);
 
             this.frame.getPanMenu().getGeneItem().setEnabled(false);
             this.frame.getPanMenu().getPlayItem().setEnabled(false);
             this.frame.getPanMenu().getPauseItem().setEnabled(false);
-            remainingTime = 100;
+            
+            remainingTime = 0;
             this.actualStepNumber = 0;
             timer.stop();
         } else {
-            int now = this.actualStepNumber++;
-            int elapsed = now - lastUpdate;
-            remainingTime -= elapsed;
-            lastUpdate = now;
-            
             this.frame.setTabToShow(this.BOLObj.getUpdatedTab().getTab(), this.BOLObj.getUpdatedTab().getX(), this.BOLObj.getUpdatedTab().getY());
             BOLObj.setTab(frame.getTabToShow(), frame.getGridWidth(), frame.getGridLength());
             BOLObj.CheckTab();
             this.frame.getPanGraphic().repaint();
             this.updateBOLObject(BOLObj);
-            
-            this.frame.getPanProgBar().setProgressNumber((int)(((double)actualStepNumber * 100.0)/(stepNumber + 1)));
+
+            this.frame.getPanProgBar().setProgressNumber((int)(((double)actualStepNumber * 100.0)/(stepNumber/+ 1)));
             HashMap countResult = BOLObj.getCaseCounter().CountStateGridCase(BOLObj, frame);
-            
+
             int nbMaxTabCase = BOLObj.getTab().getX()* BOLObj.getTab().getY();
             DecimalFormat df = new DecimalFormat("#.###");
-            
-            this.frame.getPanText().setNbStep("Tour : " + (actualStepNumber-1) + "/" + stepNumber);
+
+            this.frame.getPanText().setNbStep("Tour : " + (actualStepNumber) + "/" + stepNumber);
             String a = df.format((double)Integer.valueOf(countResult.get(Etat.jeunePousse).toString())/(double)nbMaxTabCase);
             this.frame.getPanText().setNbJeunePousse("JP : " + a);
             String b = df.format((double)Integer.valueOf(countResult.get(Etat.arbuste).toString())/(double)nbMaxTabCase);
             this.frame.getPanText().setNbArbuste("Arbu. : " + b);
             String c = df.format((double)Integer.valueOf(countResult.get(Etat.arbre).toString())/(double)nbMaxTabCase);
             this.frame.getPanText().setNbArbre("Arbre : " + c);
+            
             if (this.frame.getPanText().getNbFeu().isEnabled()) {
                 this.frame.getPanText().setNbFeu("Feu : " + df.format((double)Integer.valueOf(countResult.get(Etat.feu).toString())/(double)nbMaxTabCase));
             }
+            
             if (this.frame.getPanText().getNbInfecte().isEnabled()) {
                 this.frame.getPanText().setNbInfecte("Inf. : " + df.format((double)Integer.valueOf(countResult.get(Etat.infecte).toString())/(double)nbMaxTabCase));
             }
-            
+
             String[] csvSave = {a, b, c, df.format((double)Integer.valueOf(countResult.get(Etat.vide).toString())/(double)nbMaxTabCase)};
             this.BOLObj.getCountStateGridCase().add(csvSave);
-            
+
             this.frame.getPanText().repaint();
+            
+            int now = this.actualStepNumber++;
+            int elapsed = now - lastUpdate;
+            remainingTime -= elapsed;
+            lastUpdate = now;
         }
     }
     

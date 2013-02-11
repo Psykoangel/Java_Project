@@ -1,13 +1,9 @@
 package gil;
 
-import gil.units.PanMenu;
-import gil.units.PanProgBar;
-import gil.units.PanGraphic;
-import gil.units.PanPara;
-import gil.units.PanText;
 import bol.BOLObject;
 import bol.utils.Case;
 import gil.action.*;
+import gil.units.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +30,7 @@ public class MainFrame extends JFrame {
         //this.setLocationRelativeTo(null);
         this.setTitle("J-Sim Forest");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(1024, 720);
 
         this.panGraphic = new PanGraphic();
         this.panMenu = new PanMenu();
@@ -45,7 +41,7 @@ public class MainFrame extends JFrame {
         //ActionListener on component Application
         //this.panMenu.getReplayItem().addActionListener(null);
         this.panMenu.getQuitItem().addActionListener(new ButQuit());
-        this.panMenu.getImportItem().addActionListener(null);//<-- IMPORT
+        this.panMenu.getImportItem().addActionListener(new ImportFromDataBase(BOLObj, this));
         this.panMenu.getGeneItem().addActionListener(new ButGeneration(BOLObj, this));
         this.panMenu.getFireItem().addActionListener(new AddMode(BOLObj, this));
         this.panMenu.getInfectItem().addActionListener(new AddMode(BOLObj, this));

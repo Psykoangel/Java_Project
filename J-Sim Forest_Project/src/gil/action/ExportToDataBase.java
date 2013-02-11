@@ -40,9 +40,8 @@ public class ExportToDataBase implements ActionListener {
         Case[][] temp = obj.getUpdatedTab().getTab();
         for (int j = 0; j < temp[0].length; j++) {
             for (int i = 0; i < temp.length; i++) {
-                SaveString += i + "," + j + "," + temp[i][j].toString();
+                SaveString += i + "," + j + "," + temp[i][j].toString() + ";";
             }
-            SaveString += (j == temp[0].length-1) ? "" :  ";";
         }
         JOptionPane.showMessageDialog(frame, "Le programme va faire un sauvegarde de la grille actuelle !", "Information", JOptionPane.INFORMATION_MESSAGE);
         try {

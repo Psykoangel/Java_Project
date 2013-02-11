@@ -1,9 +1,11 @@
 
 package gil.utils;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 public class DialogBox {
     JDialog d;
@@ -25,12 +27,12 @@ public class DialogBox {
         d.setSize(300,100);
 
         button.addActionListener(new ActionListener(){
-        public void actionPerformed(ActionEvent ae){
-        d.dispose();
-        }
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                d.dispose();
+            }
         });
         d.setVisible(true);
-
     }
 
     public String getText() {

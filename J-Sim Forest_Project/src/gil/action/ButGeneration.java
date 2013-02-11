@@ -22,9 +22,13 @@ public class ButGeneration implements ActionListener {
             if (obj.getStep().getActualStepNumber() != 0) {
                 obj.getStep().setRemainingTime(obj.getStep().getRemainingTime() - 1);
             }
-            frame.getPanPara().getButGeneration().setVisible(false);
+            if (!(obj.getTab().getX() > 49 && obj.getTab().getY() > 49)) {
+                frame.getPanPara().getButGeneration().setVisible(false);
+            }
             this.obj.getStep().start(obj, frame);
-            frame.getPanPara().getButPause().setVisible(true);
+            if (!(obj.getTab().getX() > 49 && obj.getTab().getY() > 49)) {
+                frame.getPanPara().getButPause().setVisible(true);
+            }
         }
     }
 }

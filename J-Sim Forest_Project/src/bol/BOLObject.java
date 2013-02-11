@@ -137,7 +137,11 @@ public class BOLObject {
                     countList = VecinityStateCount(al);
                 }
                 
-                UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
+                if (invasionMode) {
+                    
+                } else {
+                    UpdateCheckedCell(tab.getTab()[length][width], updatedTab.getTab()[length][width], countList);
+                }
                 
             }
         }
@@ -265,17 +269,13 @@ public class BOLObject {
     private void UpdateCheckedCell(Case c, Case cc, HashMap hm){
         //System.out.println("Debut de modification d une cellule dans updatedTab !");
         cc.setEtat(c.getEtat());
-        if (fireMode || invasionMode) {
+        if (fireMode) {
         //System.out.println("modification en fireMode/InvasionMode !");
             switch(c.getEtat()){
                 case jeunePousse:
                     if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
                         if (Ignition(c.getEtat())) {
                             cc.setEtat(Etat.feu);
-                        }
-                    } else {
-                        if (Infected(c.getEtat()) && invasionMode) {
-                            cc.setEtat(Etat.infecte);
                         }
                     }
                 break;
@@ -284,20 +284,12 @@ public class BOLObject {
                         if (Ignition(c.getEtat())) {
                             cc.setEtat(Etat.feu);
                         }
-                    } else {
-                        if (Infected(c.getEtat()) && invasionMode) {
-                            cc.setEtat(Etat.infecte);
-                        }
                     }
                 break;
                 case arbre:
                     if (Integer.valueOf(hm.get(Etat.feu).toString()) >= 1) {
                         if (Ignition(c.getEtat())) {
                             cc.setEtat(Etat.feu);
-                        }
-                    } else {
-                        if (Infected(c.getEtat()) && invasionMode) {
-                            cc.setEtat(Etat.infecte);
                         }
                     }
                 break;
@@ -307,11 +299,29 @@ public class BOLObject {
                 case cendre:
                     cc.setEtat(Etat.vide);
                 break;
+            }
+            
+        } else if(invasionMode){
+            switch(c.getEtat()){
+                case jeunePousse:
+                    if (Infected(c.getEtat())) {
+                        cc.setEtat(Etat.infecte);
+                    }
+                break;
+                case arbuste:
+                    if (Infected(c.getEtat())) {
+                        cc.setEtat(Etat.infecte);
+                    }
+                break;
+                case arbre:
+                    if (Infected(c.getEtat())) {
+                        cc.setEtat(Etat.infecte);
+                    }
+                    break;
                 case infecte:
                     cc.setEtat(Etat.vide);
                 break;
             }
-            
         } else {
         //System.out.println("Modification d une cellule en normal !");
             switch(c.getEtat()){
@@ -414,5 +424,52 @@ public class BOLObject {
             break;
         }
         return false;
+    }
+    public Case[][] TransformToTab(String stringTab, int tabX, int tabY){
+        ArrayList<String[]> completeList = new ArrayList<>();
+        String[] tab1 = stringTab.split(";");
+        for (int i = 0; i < tab1.length; i++) {
+            String[] tab2 = tab1[i].split(",");
+            completeList.add(tab2);
+        }
+        
+        Case[][] newtab = new Case[tabX][tabY];
+        for (int j = 0; j < tabY; j++) {
+            for (int i = 0; i < tabX; i++) {
+                newtab[i][j] = new Case(Etat.vide);
+            }
+        }
+        
+        for (Iterator<String[]> it = completeList.iterator(); it.hasNext();) {
+            String[] line = it.next();
+            Etat temp = Etat.vide;
+            switch(Integer.valueOf(line[2])) {
+                case 0:
+                    temp = Etat.vide;
+                    break;
+                case 1:
+                    temp = Etat.jeunePousse;
+                    break;
+                case 2:
+                    temp = Etat.arbuste;
+                    break;
+                case 3:
+                    temp = Etat.arbre;
+                    break;
+                case 4:
+                    temp = Etat.feu;
+                    break;
+                case 5:
+                    temp = Etat.cendre;
+                    break;
+                case 6:
+                    temp = Etat.infecte;
+                    break;
+            }
+            int x = Integer.valueOf(line[0]);
+            int y = Integer.valueOf(line[1]);
+            newtab[x][y].setEtat(temp);
+        }
+        return newtab;
     }
 }
